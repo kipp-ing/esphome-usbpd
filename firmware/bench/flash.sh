@@ -33,6 +33,8 @@ if ! $PY -m platformio run -d $DIR > $RD/build.log 2>&1; then
   tail -25 $RD/build.log; $PY $B/run.py _meta $RUN result=build_failed; echo "flash: BUILD FAILED (runs/$RUN/build.log)"; exit 1
 fi
 BIN=$(ls -t $DIR/.pio/build/*/firmware.bin | head -1)
+FACTORY=${BIN:h}/firmware.factory.bin   # merged bootloader+partitions+app, flashed at 0x0
+[[ -f $FACTORY ]] || { echo "flash: no firmware.factory.bin next to $BIN"; exit 1; }
 if ! LC_ALL=C grep -aq -- "$BUILD_ID" $BIN; then
   $PY $B/run.py _meta $RUN result=build_id_not_in_binary
   echo "flash: BUILD_ID '$BUILD_ID' not found in $BIN — is -DBUILD_ID wired in build_flags?"; exit 1
@@ -44,7 +46,8 @@ ok=0
 for attempt in 1 2; do
   PORT=$($B/port.sh) || { $PY $B/run.py _meta $RUN result=no_board; echo "NO_BOARD"; exit 3; }
   echo "flash: upload attempt $attempt on $PORT"
-  if $PY -m platformio run -d $DIR -t nobuild -t upload --upload-port $PORT >> $RD/flash.log 2>&1; then ok=1; break; fi
+  if $PY -m esptool --chip esp32c6 --port $PORT --baud 460800 --connect-attempts 3 --after hard-reset \
+       write-flash 0x0 $FACTORY >> $RD/flash.log 2>&1; then ok=1; break; fi
   tail -5 $RD/flash.log; sleep 2
 done
 (( ok )) || { $PY $B/run.py _meta $RUN result=flash_failed; echo "flash: UPLOAD FAILED twice (runs/$RUN/flash.log)"; exit 1; }
