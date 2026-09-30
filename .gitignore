@@ -1,0 +1,5 @@
+runs/*/
+.pio/
+fw/.pio/
+test/host/build/
+*.o
