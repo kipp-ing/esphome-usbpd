@@ -4,6 +4,7 @@
 #include <string.h>
 #include "scenario.h"
 #include "fusb302_regs.h"
+#include "pd_drv.h"
 #include "log.h"
 
 #define HAS(ev, a, b) (logcap_find(0, ev, a, b) >= 0)
@@ -665,6 +666,67 @@ static void t34(void)
     done();
 }
 
+static void t34bcd(void)
+{
+    scn_begin("T34b collision_restarts_deadline");
+    scn_boot();
+    attach_cc1();
+    fake_set_ack(&S.f, ACK_COLL, 8);                     /* coll at +8, GoodCRC at +16 > 10 */
+    scn_push_d1(0);
+    scn_tick(20);
+    SCN_CHECK(S.f.ntx == 2);
+    SCN_CHECK(scn_log_order("pd.txres", "\"res\":\"coll\"", "pd.txres", "\"res\":\"sent\""));
+    SCN_CHECK(!HAS("pd.txres", "\"res\":\"tmo\"", NULL));
+    SCN_CHECK(S.sm.state == PD_ST_SELECT_CAP);
+    done();
+
+    scn_begin("T34c double_collision_fail");
+    scn_boot();
+    attach_cc1();
+    fake_set_ack(&S.f, ACK_COLL, 1);
+    S.f.coll_n = 2;
+    scn_push_d1(0);
+    scn_tick(4);
+    SCN_CHECK(S.f.ntx == 3);                             /* Request, resend, then Soft_Reset */
+    SCN_CHECK(scn_log_order("pd.txres", "\"coll\":true", "sm", "\"to\":\"SendSoftReset\",\"on\":\"TX_FAIL\""));
+    SCN_CHECK(scn_log_order("pd.txres", "\"res\":\"coll\"", "pd.txres", "\"res\":\"fail\""));
+    done();
+
+    scn_begin("T34d fifo_write_i2c_fail");
+    scn_boot();
+    attach_cc1();
+    S.f.fail_fifo_wr = 1;
+    scn_push_d1(0);
+    scn_tick(2);
+    SCN_CHECK(S.f.ntx == 1);                             /* only the Soft_Reset reached the bus */
+    SCN_CHECK(scn_log_order("pd.txres", "\"i2c\":true", "sm", "\"to\":\"SendSoftReset\",\"on\":\"TX_FAIL\""));
+    SCN_CHECK(HAS("pd.tx", "\"type\":\"Soft_Reset\"", NULL) && !HAS("pd.tx", "\"type\":\"Request\"", NULL));
+    done();
+}
+
+/* §2.1: an idle step is one 5-byte burst 0x3E..0x42 (or 5 single reads with
+ * PD_DRV_BURST_POLL=0); nothing ever bursts into FIFOS. */
+static void t39(void)
+{
+    scn_begin(PD_DRV_BURST_POLL ? "T39 idle_step_burst" : "T39 idle_step_single");
+    scn_contract_5v();
+    scn_tick(5);
+    uint32_t x0 = S.f.xfers, b0 = S.f.bus_bytes, n0 = S.f.bursts;
+    uint32_t s0[5];
+    for (int k = 0; k < 5; k++) s0[k] = S.f.single_reads[FUSB_INTERRUPTA + k];
+    scn_tick(1);
+    SCN_CHECK(S.sm.state == PD_ST_READY);
+#if PD_DRV_BURST_POLL
+    SCN_CHECK(S.f.xfers - x0 == 1 && S.f.bus_bytes - b0 == 8 && S.f.bursts - n0 == 1);
+    for (int k = 0; k < 5; k++) SCN_CHECK(S.f.single_reads[FUSB_INTERRUPTA + k] == s0[k]);
+#else
+    SCN_CHECK(S.f.xfers - x0 == 5 && S.f.bus_bytes - b0 == 20 && S.f.bursts == n0 && n0 == 0);
+    for (int k = 0; k < 5; k++) SCN_CHECK(S.f.single_reads[FUSB_INTERRUPTA + k] == s0[k] + 1);
+#endif
+    SCN_CHECK(S.f.burst_bad == 0);
+    done();
+}
+
 static void t35(void)
 {
     scn_begin("T35a ping_in_ready");
@@ -787,12 +849,12 @@ int main(int argc, char **argv)
 {
     (void)argv;
     scn_verbose = argc > 1;
-    printf("test_sm\n");
+    printf("test_sm (PD_DRV_BURST_POLL=%d)\n", PD_DRV_BURST_POLL);
     t01(); t02(); t03(); t04(); t05(); t06();
     t07(); t08(); t09(); t10(); t11(); t12(); t13(); t14(); t15();
     t16(); t17(); t18(); t19(); t20(); t21(); t22(); t23(); t24();
     t25(); t26(); t27(); t28(); t29();
-    t30(); t31(); t32(); t33(); t34(); t35(); t36(); t37();
+    t30(); t31(); t32(); t33(); t34(); t34bcd(); t35(); t36(); t37(); t39();
     m_jsonl(); m_table(); m_want_unattached();
     /* §2.1 budget at 400 kHz: 9 bit-times per byte = 22.5 us, plus ~50 us driver
      * overhead per transaction (estimate; the firmware measures the real value). */

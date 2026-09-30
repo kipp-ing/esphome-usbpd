@@ -51,6 +51,7 @@ void scn_fail(const char *file, int line, const char *what)
 
 int scn_end(void)
 {
+    SCN_CHECK(S.f.burst_bad == 0);                       /* no burst ever reaches FIFOS 0x43 */
     printf("  %s %s\n", S.fails ? "FAIL" : "ok  ", S.name);
     if (S.fails && !scn_verbose) {
         printf("---- log ----\n");

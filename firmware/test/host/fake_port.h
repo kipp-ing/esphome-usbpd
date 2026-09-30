@@ -19,7 +19,7 @@ typedef enum {            /* F6 auto-ack modes, applied per TX burst */
     ACK_GCRC,             /* push a GoodCRC frame with the burst's MessageID */
     ACK_BOTH,             /* both of the above (default) */
     ACK_RETRYFAIL,        /* Interrupta.I_RETRYFAIL */
-    ACK_COLL,             /* Interrupt.I_COLLISION once, then acts as BOTH */
+    ACK_COLL,             /* Interrupt.I_COLLISION coll_n times (default 1), then acts as BOTH */
 } fake_ack_t;
 
 typedef struct {
@@ -47,13 +47,17 @@ typedef struct {
     uint32_t sw_resets, pd_resets;              /* F4 */
     fake_ack_t ack_mode;                        /* F6 */
     uint32_t ack_delay;
-    bool coll_done;
+    uint8_t coll_done, coll_n;                  /* ACK_COLL: collisions injected / to inject (default 1) */
     fake_pending_ack_t pend[8];
     uint32_t last_rxpush;                       /* tick of the last test RX push */
     uint32_t reads, writes;   /* register-level accesses (FIFO bytes counted singly) */
     uint32_t xfers;           /* I2C transactions (a FIFO burst is one) */
     uint32_t bus_bytes;       /* bytes on the wire incl. address/register bytes */
     int fail_next;                              /* >0: next N accesses return -1 */
+    int fail_fifo_wr;                           /* >0: next N TX FIFO writes return -1 */
+    uint32_t single_reads[256];                 /* single-register read transactions per reg */
+    uint32_t bursts, burst_bad;                 /* multi-byte register reads; ones crossing 0x43 */
+    uint32_t fifo_reads;                        /* RX FIFO read transactions */
 } fake_port_t;
 
 void fake_port_init(fake_port_t *f, struct pd_port_ops *ops);

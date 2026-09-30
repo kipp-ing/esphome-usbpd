@@ -9,7 +9,7 @@ BUILD   := build
 # Firmware sources that are pure C (no ESP-IDF). Add pd_msg.c etc. here.
 FW_SRCS := $(FW)/pd_sm.c $(FW)/pd_drv.c $(FW)/pd_msg.c $(FW)/log.c
 SIM_SRCS := fake_port.c scenario.c
-TESTS   := test_msg test_sm
+TESTS   := test_msg test_sm test_sm_single
 
 .PHONY: all test clean
 all: $(addprefix $(BUILD)/,$(TESTS))
@@ -17,6 +17,11 @@ all: $(addprefix $(BUILD)/,$(TESTS))
 $(BUILD)/%: %.c $(FW_SRCS) $(SIM_SRCS) $(wildcard *.h) $(wildcard $(FW)/*.h)
 	@mkdir -p $(BUILD)
 	$(CC) $(CFLAGS) -o $@ $< $(FW_SRCS) $(SIM_SRCS)
+
+# Same scenarios with the §2.1 single-read poll fallback.
+$(BUILD)/test_sm_single: test_sm.c $(FW_SRCS) $(SIM_SRCS) $(wildcard *.h) $(wildcard $(FW)/*.h)
+	@mkdir -p $(BUILD)
+	$(CC) $(CFLAGS) -DPD_DRV_BURST_POLL=0 -o $@ $< $(FW_SRCS) $(SIM_SRCS)
 
 test: all
 	@set -e; for t in $(TESTS); do echo "== $$t"; ./$(BUILD)/$$t; done; echo "ALL HOST TESTS PASSED"

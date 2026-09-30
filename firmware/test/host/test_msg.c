@@ -100,6 +100,10 @@ static void test_decode(void)
     pd_pdo_t a = pd_pdo_decode(0xC1A42164);
     CHECK(a.kind == 'A' && a.mv == 21000 && a.ma == 5000);
     CHECK(pd_pdo_decode(0x40000000).kind == 'B' && pd_pdo_decode(0x80000000).kind == 'V');
+    pd_pdo_t b = pd_pdo_decode(0x590000F0);               /* battery 20 V max, 60 W */
+    CHECK(b.kind == 'B' && b.mv == 20000 && b.ma == 3000);
+    pd_pdo_t v = pd_pdo_decode(0x92C0012C);               /* variable 15 V max, 3 A */
+    CHECK(v.kind == 'V' && v.mv == 15000 && v.ma == 3000);
     CHECK(PD_HDR_REV(0x2161) == 1 && PD_HDR_NDO(0x2161) == 2);
 }
 

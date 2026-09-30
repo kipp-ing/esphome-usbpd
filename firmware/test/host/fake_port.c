@@ -30,31 +30,51 @@ uint8_t fake_status0(const fake_port_t *f)                /* F1 */
     return (uint8_t)((f->reg[FUSB_STATUS0] & ~FUSB_ST0_BC_LVL_MASK) | (bc & FUSB_ST0_BC_LVL_MASK));
 }
 
-static int f_rd(void *ctx, uint8_t reg, uint8_t *v)
+static void rd_one(fake_port_t *f, uint8_t reg, uint8_t *v)
 {
-    fake_port_t *f = ctx;
-    if (f->fail_next > 0) { f->fail_next--; return -1; }
     f->reads++;
-    if (reg != FUSB_FIFOS) { f->xfers++; f->bus_bytes += 4; }   /* addrW reg addrR data */
     switch (reg) {
     case FUSB_FIFOS:
         *v = f->rx_pos < f->rx_len ? f->rx[f->rx_pos++] : 0;
         if (f->rx_pos >= f->rx_len) f->rx_len = f->rx_pos = 0;
-        return 0;
+        return;
     case FUSB_STATUS0:
         *v = fake_status0(f);
-        return 0;
+        return;
     case FUSB_STATUS1:                                    /* F2 */
         *v = (uint8_t)((f->reg[reg] & ~FUSB_ST1_RX_EMPTY) | (f->rx_pos >= f->rx_len ? FUSB_ST1_RX_EMPTY : 0));
-        return 0;
+        return;
     case FUSB_INTERRUPT: case FUSB_INTERRUPTA: case FUSB_INTERRUPTB:
         *v = f->reg[reg];
         f->reg[reg] = 0;                                  /* read-to-clear */
-        return 0;
+        return;
     default:
         *v = f->reg[reg];
-        return 0;
+        return;
     }
+}
+
+static int f_rd(void *ctx, uint8_t reg, uint8_t *v)
+{
+    fake_port_t *f = ctx;
+    if (f->fail_next > 0) { f->fail_next--; return -1; }
+    f->xfers++; f->bus_bytes += 4;                        /* addrW reg addrR data */
+    f->single_reads[reg]++;
+    rd_one(f, reg, v);
+    return 0;
+}
+
+/* Multi-byte read with the chip's address auto-increment (DS Fig. 14). FIFOS (0x43)
+ * does not increment, so a burst that would cross into it is a driver bug. */
+static int f_rd_burst(void *ctx, uint8_t reg, uint8_t *b, size_t n)
+{
+    fake_port_t *f = ctx;
+    if (f->fail_next > 0) { f->fail_next--; return -1; }
+    if (reg >= FUSB_FIFOS || reg + n - 1 >= FUSB_FIFOS) { f->burst_bad++; return -1; }
+    f->xfers++; f->bus_bytes += 3 + (uint32_t)n;
+    f->bursts++;
+    for (size_t i = 0; i < n; i++) rd_one(f, (uint8_t)(reg + i), &b[i]);
+    return 0;
 }
 
 static void tx_capture(fake_port_t *f, const uint8_t *b, size_t n)   /* F5 + F6 */
@@ -65,8 +85,8 @@ static void tx_capture(fake_port_t *f, const uint8_t *b, size_t n)   /* F5 + F6 
     memcpy(t->b, b, t->n);
     f->ntx++;
     fake_ack_t mode = f->ack_mode;
-    if (mode == ACK_COLL && f->coll_done) mode = ACK_BOTH;
-    if (mode == ACK_COLL) f->coll_done = true;
+    if (mode == ACK_COLL && f->coll_done >= f->coll_n) mode = ACK_BOTH;
+    if (mode == ACK_COLL) f->coll_done++;
     if (mode == ACK_NONE) return;
     uint8_t id = n >= 7 ? (uint8_t)((b[6] >> 1) & 7) : 0;
     for (int i = 0; i < 8; i++)
@@ -111,14 +131,17 @@ static int f_wr(void *ctx, uint8_t reg, uint8_t v)
 static int f_fifo_rd(void *ctx, uint8_t *b, size_t n)
 {
     fake_port_t *f = ctx;
+    if (f->fail_next > 0) { f->fail_next--; return -1; }
     f->xfers++; f->bus_bytes += 3 + (uint32_t)n;
-    for (size_t i = 0; i < n; i++) if (f_rd(ctx, FUSB_FIFOS, &b[i])) return -1;
+    f->fifo_reads++;
+    for (size_t i = 0; i < n; i++) rd_one(f, FUSB_FIFOS, &b[i]);
     return 0;
 }
 static int f_fifo_wr(void *ctx, const uint8_t *b, size_t n)
 {
     fake_port_t *f = ctx;
     if (f->fail_next > 0) { f->fail_next--; return -1; }
+    if (f->fail_fifo_wr > 0) { f->fail_fifo_wr--; return -1; }
     f->writes++;
     f->xfers++; f->bus_bytes += 2 + (uint32_t)n;
     f->wcount[FUSB_FIFOS]++;
@@ -133,8 +156,9 @@ void fake_port_init(fake_port_t *f, struct pd_port_ops *ops)
     reset_values(f);
     f->ack_mode = ACK_BOTH;
     f->ack_delay = 1;
+    f->coll_n = 1;
     *ops = (struct pd_port_ops){
-        .ctx = f, .reg_read = f_rd, .reg_write = f_wr,
+        .ctx = f, .reg_read = f_rd, .reg_read_burst = f_rd_burst, .reg_write = f_wr,
         .fifo_read = f_fifo_rd, .fifo_write = f_fifo_wr, .now_ms = f_now,
     };
 }
@@ -154,7 +178,8 @@ void fake_set_ack(fake_port_t *f, fake_ack_t mode, uint32_t delay)
 {
     f->ack_mode = mode;
     f->ack_delay = delay;
-    f->coll_done = false;
+    f->coll_done = 0;
+    f->coll_n = 1;
 }
 
 void fake_tick(fake_port_t *f)
