@@ -1,0 +1,6 @@
+# Console on the built-in USB-Serial-JTAG (the Mac cable)
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+# Keep IDF log chatter low so the stream stays JSONL
+CONFIG_LOG_DEFAULT_LEVEL_WARN=y
+CONFIG_BOOTLOADER_LOG_LEVEL_WARN=y
+CONFIG_FREERTOS_HZ=1000
