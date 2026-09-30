@@ -1,4 +1,4 @@
-runs/*/
+runs/*/raw.log
 .pio/
 fw/.pio/
 test/host/build/
