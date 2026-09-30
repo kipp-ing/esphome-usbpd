@@ -1,0 +1,9 @@
+{
+ "run": "20260930T090229Z-flash",
+ "scenario": "flash",
+ "created": "2026-09-30T09:02:29.606Z",
+ "fw_git_sha": "897872f-dirty",
+ "build_id": "x1",
+ "project": "fw",
+ "result": "build_only"
+}
