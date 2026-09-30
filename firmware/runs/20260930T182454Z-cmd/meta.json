@@ -1,0 +1,16 @@
+{
+ "run": "20260930T182454Z-cmd",
+ "scenario": "cmd",
+ "created": "2026-09-30T18:24:54.827Z",
+ "fw_git_sha": "2f1a9d0",
+ "build_id": "2f1a9d0-0930T181814",
+ "args": {
+  "cmd": "pd want 9000",
+  "secs": 70.0,
+  "keep": false,
+  "port_check": true
+ },
+ "ended": "2026-09-30T18:26:11.387Z",
+ "rc": 0,
+ "observed_build": "2f1a9d0-0930T181814"
+}
