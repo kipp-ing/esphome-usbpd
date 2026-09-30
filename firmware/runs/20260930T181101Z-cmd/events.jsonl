@@ -1,0 +1,111 @@
+{"ev":"bench.capture","state":"start","pid":12080,"host_ts":"2026-09-30T18:11:01.857Z","run":"20260930T181101Z-cmd"}
+{"ev":"bench.port","state":"open","port":"/dev/cu.usbmodem1101","host_ts":"2026-09-30T18:11:01.877Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"be5ccf1-0930T180901\",\"state\":\"Unattached\",\"vbus\":false,\"want\":5000,\"mv\":0,\"poll_max_us\":253,\"i2c_errs\":0}","host_ts":"2026-09-30T18:11:02.087Z","run":"20260930T181101Z-cmd"}
+{"t":5005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.087Z","run":"20260930T181101Z-cmd"}
+{"t":6005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.088Z","run":"20260930T181101Z-cmd"}
+{"t":7005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.088Z","run":"20260930T181101Z-cmd"}
+{"t":8005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.088Z","run":"20260930T181101Z-cmd"}
+{"t":9005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.088Z","run":"20260930T181101Z-cmd"}
+{"t":10005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.088Z","run":"20260930T181101Z-cmd"}
+{"t":11005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.088Z","run":"20260930T181101Z-cmd"}
+{"t":12005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.088Z","run":"20260930T181101Z-cmd"}
+{"t":13005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.088Z","run":"20260930T181101Z-cmd"}
+{"t":14005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.088Z","run":"20260930T181101Z-cmd"}
+{"t":15005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.088Z","run":"20260930T181101Z-cmd"}
+{"t":16005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.089Z","run":"20260930T181101Z-cmd"}
+{"t":17005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.089Z","run":"20260930T181101Z-cmd"}
+{"t":18005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.089Z","run":"20260930T181101Z-cmd"}
+{"t":19005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.089Z","run":"20260930T181101Z-cmd"}
+{"t":20005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.089Z","run":"20260930T181101Z-cmd"}
+{"t":21005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.089Z","run":"20260930T181101Z-cmd"}
+{"t":22005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.089Z","run":"20260930T181101Z-cmd"}
+{"t":23005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.089Z","run":"20260930T181101Z-cmd"}
+{"t":24005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.089Z","run":"20260930T181101Z-cmd"}
+{"t":25005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.089Z","run":"20260930T181101Z-cmd"}
+{"t":26005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.089Z","run":"20260930T181101Z-cmd"}
+{"t":27005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"host_ts":"2026-09-30T18:11:02.089Z","run":"20260930T181101Z-cmd"}
+{"t":31005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":268,"i2c_errs":0,"log_drops":3,"host_ts":"2026-09-30T18:11:02.716Z","run":"20260930T181101Z-cmd"}
+{"ev":"bench.send","cmd":"regs","t":31220,"t_est":true,"host_ts":"2026-09-30T18:11:02.932Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"Guru Meditation Error: Core  0 panic'ed (Stack protection fault). ","host_ts":"2026-09-30T18:11:02.943Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"","host_ts":"2026-09-30T18:11:02.943Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"Detected in task \"main\" at 0x40035b92","host_ts":"2026-09-30T18:11:02.943Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"Stack pointer: 0x40811780","host_ts":"2026-09-30T18:11:02.943Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"Stack bounds: 0x408119cc - 0x408129c0","host_ts":"2026-09-30T18:11:02.943Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"Core  0 register dump:","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"MEPC    : 0x40035bc8  RA      : 0x400316c6  SP      : 0x40811780  GP      : 0x4080d8a4  ","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"TP      : 0x408129c0  T0      : 0x400283c2  T1      : 0x0000000f  T2      : 0x40811c63  ","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"S0/FP   : 0x000002bf  S1      : 0x40812a28  A0      : 0x40812a28  A1      : 0x40811bc8  ","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"A2      : 0x420202d0  A3      : 0x40811c4c  A4      : 0x00000001  A5      : 0xffffffff  ","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"A6      : 0x00000004  A7      : 0x00000002  S2      : 0x420202d0  S3      : 0x00000001  ","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"S4      : 0x40811bc8  S5      : 0x00000000  S6      : 0x00000000  S7      : 0x00000000  ","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"S8      : 0x00000000  S9      : 0x00000000  S10     : 0x00000000  S11     : 0x00000000  ","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"T3      : 0x00001800  T4      : 0x40811c63  T5      : 0x00000000  T6      : 0x00000000  ","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"MSTATUS : 0x00001881  MTVEC   : 0x40800001  MCAUSE  : 0x0000001b  MTVAL   : 0x3fb12e23  ","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"MHARTID : 0x00000000  ","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"Stack memory:","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811780: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"408117a0: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"408117c0: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"408117e0: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811800: 0x00000000 0x00000000 0x00000000 0x40811c4c 0x00000000 0x00000001 0x0000000c 0x4081182c","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811820: 0x00000000 0x40811814 0x00000010 0x000a010a 0x0000003b 0x00000000 0x408119b8 0x00000054","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811840: 0x00000000 0x40811840 0x00000000 0x00000000 0x00000000 0x40811858 0xffffffff 0x40811858","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811860: 0x40811858 0x00000000 0x4081186c 0xffffffff 0x4081186c 0x4081186c 0x00000001 0x00000001","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811880: 0x00000000 0x4000ffff 0x00000000 0x00000013 0x40811838 0x00000054 0x40811898 0x40811898","host_ts":"2026-09-30T18:11:02.944Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"408118a0: 0x40811898 0x40811898 0x00000000 0x408118b0 0xffffffff 0x408118b0 0x408118b0 0x00000000","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"408118c0: 0x408118c4 0xffffffff 0x408118c4 0x408118c4 0x00000001 0x00000001 0x00000000 0xa500ffff","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"408118e0: 0x00000000 0xa5a5a5a5 0x40811890 0x00000054 0x408118f0 0x408118f0 0x408118f0 0x408118f0","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811900: 0x00000000 0x40811908 0xffffffff 0x40811908 0x40811908 0x00000000 0x4081191c 0xffffffff","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811920: 0x4081191c 0x4081191c 0x00000001 0x00000001 0x00000000 0xa500ffff 0x00000000 0xa5a5a5a5","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811940: 0x408118e8 0x00000020 0x00000000 0x00000000 0x00000000 0x00000000 0x4200ebc8 0x00000000","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811960: 0x00000000 0x00000000 0x00000038 0x40000b10 0x4080246e 0x40000b18 0x40000b14 0x40000b08","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811980: 0x4200e668 0x40000b1c 0x40000b30 0x40000b2c 0x40000b28 0x40000b38 0x40000b3c 0x4200e768","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"408119a0: 0x40802e5a 0x0000000d 0x4080faf4 0x4080faf4 0x408119a0 0x00000012 0x0010010a 0x00000016","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"408119c0: 0x00000000 0x4081327c 0x00001000 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"408119e0: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811a00: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811a20: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811a40: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0x40811b5c 0x00000000 0x00000005 0x00000000","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811a60: 0x4080752c 0x40807522 0x40811ae0 0x4080d8a4 0x408129c0 0x40030dca 0x0000000f 0x40811c63","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811a80: 0x4087e548 0x00000000 0x00000001 0x00000001 0x00000000 0x00000004 0x00000001 0x00000001","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811aa0: 0x00000006 0x00000002 0x00000001 0x40811b38 0x4087e45c 0x4087e46c 0x00000000 0x00000000","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811ac0: 0x00000000 0x00000000 0x00000000 0x00000000 0x00001800 0x40811c63 0x00000000 0x00000000","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811ae0: 0x00003044 0x00000000 0x4087e548 0x408069bc 0x4087e45c 0x00001c01 0x4087e110 0x00000000","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811b00: 0x00000000 0x00000000 0x00000000 0x00007a3d 0x00000000 0x4087e46c 0x4087e45c 0x4087e46c","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811b20: 0x4087e45c 0x0000000a 0x4087e110 0x42014b06 0xa5a5a5a5 0xa5a5a5a5 0x00000001 0x01000001","host_ts":"2026-09-30T18:11:02.945Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811b40: 0x00000000 0x00000000 0x4087e498 0x40806986 0x4087e5f0 0x0000000a 0x4087e110 0x00000000","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"40811b60: 0xa5a5a5a5 0xa5a5a5a5 0x00400000 0x00400000 0xa5a5a5a5 0x00000001 0x40811c3f 0x40811bb0","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"ELF file SHA256: 59bb81882","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"Rebooting...","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"ESP-ROM:esp32c6-20220919","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"Build:Sep 19 2022","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"rst:0xc (SW_CPU),boot:0x4f (SPI_FAST_FLASH_BOOT)","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"Saved PC:0x4001975a","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"SPIWP:0xee","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"mode:DIO, clock div:2","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"load:0x40875730,len:0x123c","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"load:0x4086b910,len:0xc5c","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"load:0x4086e610,len:0x2f04","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"entry 0x4086b910","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"W (118) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"ev":"raw","line":"W (118) spi_flash: Detected size(16384k) larger than the size in the binary image header(8192k). Using the size in the binary image header.","host_ts":"2026-09-30T18:11:03.147Z","run":"20260930T181101Z-cmd"}
+{"t":3,"ev":"boot","build":"be5ccf1-0930T180901","reset_reason":"panic","i2c_hz":400000,"host_ts":"2026-09-30T18:11:03.148Z","run":"20260930T181101Z-cmd"}
+{"t":4,"ev":"fusb.id","ok":true,"id":"0x81","ver":8,"rev":1,"host_ts":"2026-09-30T18:11:03.148Z","run":"20260930T181101Z-cmd"}
+{"t":5,"ev":"sm.init","rows":85,"states":16,"state":"Unattached","host_ts":"2026-09-30T18:11:03.148Z","run":"20260930T181101Z-cmd"}
+{"t":6,"ev":"vbus","on":false,"host_ts":"2026-09-30T18:11:03.148Z","run":"20260930T181101Z-cmd"}
+{"t":6,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":375,"i2c_errs":0,"host_ts":"2026-09-30T18:11:03.148Z","run":"20260930T181101Z-cmd"}
+{"t":1005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":255,"i2c_errs":0,"host_ts":"2026-09-30T18:11:04.156Z","run":"20260930T181101Z-cmd"}
+{"t":2005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":254,"i2c_errs":0,"host_ts":"2026-09-30T18:11:05.179Z","run":"20260930T181101Z-cmd"}
+{"t":3005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":252,"i2c_errs":0,"host_ts":"2026-09-30T18:11:06.224Z","run":"20260930T181101Z-cmd"}
+{"t":4005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":254,"i2c_errs":0,"host_ts":"2026-09-30T18:11:07.258Z","run":"20260930T181101Z-cmd"}
+{"t":5005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":252,"i2c_errs":0,"host_ts":"2026-09-30T18:11:08.073Z","run":"20260930T181101Z-cmd"}
+{"t":6005,"ev":"hb","build":"be5ccf1-0930T180901","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":254,"i2c_errs":0,"host_ts":"2026-09-30T18:11:09.088Z","run":"20260930T181101Z-cmd"}
+{"ev":"bench.capture","state":"stop","lines":106,"t":6006,"t_est":true,"host_ts":"2026-09-30T18:11:09.090Z","run":"20260930T181101Z-cmd"}
+{"ev":"bench.panic","n":1,"why":"Stack protection fault","task":"main","pc":"0x40035bc8","ra":"0x400316c6","sp":"0x40811780","stack":"0x408119cc-0x408129c0","elf":"fw/.pio/build/esp32c6/firmware.elf","pc_fn":"??","pc_src":"??:0","ra_fn":"??","ra_src":"??:0","frames":["coex_schm_timeout_process coexist_scheme.o:?","coex_core_event_duration_get ??:?","coex_hw_timer_tick_get ??:?","s_i2c_send_commands idf/components/esp_driver_i2c/i2c_master.c:613"],"host_ts":"2026-09-30T18:11:19.071Z","run":"20260930T181101Z-cmd"}

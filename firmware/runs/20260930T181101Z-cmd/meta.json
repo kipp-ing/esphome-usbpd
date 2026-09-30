@@ -1,0 +1,16 @@
+{
+ "run": "20260930T181101Z-cmd",
+ "scenario": "cmd",
+ "created": "2026-09-30T18:11:01.776Z",
+ "fw_git_sha": "be5ccf1",
+ "build_id": "be5ccf1-0930T180901",
+ "args": {
+  "cmd": "regs",
+  "secs": 6.0,
+  "keep": false,
+  "port_check": true
+ },
+ "ended": "2026-09-30T18:11:14.306Z",
+ "rc": 0,
+ "observed_build": "be5ccf1-0930T180901"
+}
