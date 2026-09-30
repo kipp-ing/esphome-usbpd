@@ -28,7 +28,7 @@ try:
     import serial  # pyserial
 except ImportError:  # re-exec under the esphome venv, which ships pyserial
     cands = sorted(glob.glob("/opt/homebrew/Cellar/esphome/*/libexec/bin/python"))
-    if cands and os.path.realpath(sys.executable) != os.path.realpath(cands[-1]) \
+    if cands and os.path.abspath(sys.executable) != os.path.abspath(cands[-1]) \
             and not os.environ.get("BENCH_REEXEC"):
         os.environ["BENCH_REEXEC"] = "1"
         os.execv(cands[-1], [cands[-1]] + sys.argv)
