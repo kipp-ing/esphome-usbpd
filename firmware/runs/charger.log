@@ -1,3 +1,6 @@
 2026-09-30T18:08:07.520+00:00 charger off rc=0 2026-09-30 20:08:07 charger off -> HTTP 200
 2026-09-30T18:08:32.625+00:00 charger on rc=0 2026-09-30 20:08:32 charger on -> HTTP 200
 2026-09-30T18:10:10.104+00:00 charger off rc=0 2026-09-30 20:10:10 charger off -> HTTP 200
+2026-09-30T18:11:44.301+00:00 charger off rc=0 2026-09-30 20:11:44 charger off -> HTTP 200
+2026-09-30T18:12:09.431+00:00 charger on rc=0 2026-09-30 20:12:09 charger on -> HTTP 200
+2026-09-30T18:12:26.929+00:00 charger off rc=0 2026-09-30 20:12:26 charger off -> HTTP 200
