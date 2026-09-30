@@ -10,9 +10,11 @@ Artifacts: `fw/.pio/build/esp32c6/firmware.factory.bin` (merged, flash at 0x0) o
 `bootloader.bin`@0x0, `partitions.bin`@0x8000, `firmware.bin`@0x10000.
 
 ## Build-id contract (mr-engineer <-> mr-bench)
-- Env var `BUILD_ID` at build time -> `-DBUILD_ID="<id>"` (via `fw/build_id.py`). Unset/empty -> `"dev"`.
-- Allowed chars `[A-Za-z0-9._:+-]`, 1..48 long; anything else fails the build.
-- Changing BUILD_ID rebuilds everything (~60 s); that's expected.
+- Env var `BUILD_ID` at build time -> `fw/src/build_id.h` (`#define BUILD_ID "<id>"`, gitignored),
+  written by the shared pre-script `bench/build_id.py` only when the id changes; `main.c` includes it.
+  Unset/empty -> `"dev"`. A new id recompiles only main.c (seconds, not a full ESP-IDF rebuild).
+- Chars `[A-Za-z0-9._:+-]`, <= 48 (flash.sh generates ids in that form).
+- `"build"` is also in every `hb` line, so the id is visible even if the boot line was dropped.
 - The first JSONL line after every reset is
   `{"t":<ms>,"ev":"boot","build":"<BUILD_ID>","reset_reason":"poweron|sw|panic|usb|...","i2c_hz":400000}`
   — bench verifies a flash by matching `build`.
@@ -28,7 +30,7 @@ carries `log_drops`. Lines too long for the buffer end in `"trunc":true`.
 | ev | meaning |
 |---|---|
 | `boot` | see above |
-| `hb` | every 1 s: `state`, `i2c_errs`, (`log_drops` when it changed) |
+| `hb` | every 1 s: `build`, `state`, `i2c_errs`, (`log_drops` when it changed) |
 | `sm` | every transition `from`,`to`,`on` (internal transitions have from==to) |
 | `sm.init` / `sm.unhandled` / `sm.qfull` / `sm.want` | SM bookkeeping |
 | `i2c.err` | `op`,`reg`,`n`,`rc`,`rc_name`,`errs` |
