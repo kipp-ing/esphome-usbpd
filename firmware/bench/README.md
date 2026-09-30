@@ -16,7 +16,7 @@ has pyserial, esptool 5.x, PlatformIO 6.1); scripts find it themselves.
 | `bench/flash.sh [--dir fw] [--build-only] [--no-verify]` | stop capture -> build -> esptool write-flash `firmware.factory.bin`@0x0 (retry once) -> capture new run -> verify boot build-id. Exit 0 ok, 1 build/flash fail, 3 NO_BOARD, 4 no build line, 5 mismatch. Capture keeps running. |
 | `bench/reset.sh` | stop capture, esptool hard reset, restart capture (same run if one was active, else new run `reset`) |
 | `bench/run.py boot [--secs 10]` | new run: esptool hard reset, capture N s |
-| `bench/run.py replug [--off 25] [--secs 45]` | new run: capture, charger off (>= 25 s enforced), on, capture N s |
+| `bench/run.py replug [--off 25] [--secs 45] [--cycles N] ["<cmd>"]` | new run: capture, then N x (charger off (>= 25 s enforced) [-> send `<cmd>` while off] -> on -> capture N s) |
 | `bench/run.py cmd "pd want 9000" [--secs 5]` | new run: send console line, capture N s |
 | `bench/panic.py RUN [--elf P]` | decode ESP-IDF panic dumps (addr2line vs fw ELF) -> `bench.panic` events (`pc_fn/pc_src/ra_fn/ra_src/stack/frames`) |
 | `bench/q ...` | query (below) |

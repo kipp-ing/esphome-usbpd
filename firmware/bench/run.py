@@ -2,7 +2,8 @@
 """bench/run.py — bench scenarios; each makes a new run dir runs/<UTC>-<scenario>/.
 
   run.py boot   [--secs 10]                    stop capture, esptool hard reset, capture N s
-  run.py replug [--off 25] [--secs 45]         charger off >= 25 s -> on -> capture N s
+  run.py replug [--off 25] [--secs 45] [--cycles N] ["<cmd>"]
+                                               (charger off >= 25 s [-> send cmd] -> on -> capture N s) x N
   run.py cmd "<console cmd>" [--secs 5]        send a console line, capture N s
   common: --keep  leave capture running after the scenario (default: stop, port free)
 
@@ -236,11 +237,24 @@ def scenario(a):
                 rc = 1
                 print("run: charger off FAILED — aborting, charger state unknown", file=sys.stderr)
             else:
-                time.sleep(off)
-                if not charger(run, "on") and not charger(run, "on"):
-                    rc = 1
-                    print("run: charger on FAILED twice — operator needed", file=sys.stderr)
-                time.sleep(a.secs or 45)
+                for cyc in range(max(a.cycles or 1, 1)):
+                    if cyc:
+                        if not charger(run, "off"):
+                            rc = 1
+                            print("run: charger off FAILED — aborting, charger state unknown", file=sys.stderr)
+                            break
+                    time.sleep(off)
+                    if a.cmd:   # console line while the charger is off (e.g. "pd want 9000" before attach)
+                        rep = capture.rpc({"op": "send", "cmd": a.cmd})
+                        if not rep.get("ok"):
+                            print(f"run: send failed: {rep}", file=sys.stderr)
+                            rc = 1
+                        time.sleep(1)
+                    if not charger(run, "on") and not charger(run, "on"):
+                        rc = 1
+                        print("run: charger on FAILED twice — operator needed", file=sys.stderr)
+                        break
+                    time.sleep(a.secs or 45)
         elif sc == "cmd":
             if not a.cmd:
                 sys.exit("run: cmd needs the console command")
@@ -303,6 +317,7 @@ def main(argv):
     ap.add_argument("--secs", type=float)
     ap.add_argument("--off", type=float)
     ap.add_argument("--keep", action="store_true")
+    ap.add_argument("--cycles", type=int, help="replug: number of off/on cycles in one run")
     ap.add_argument("--no-port-check", dest="port_check", action="store_false")
     return scenario(ap.parse_args(argv))
 
