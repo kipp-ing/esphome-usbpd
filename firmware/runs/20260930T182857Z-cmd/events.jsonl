@@ -1,0 +1,43 @@
+{"ev":"bench.capture","state":"start","pid":31648,"host_ts":"2026-09-30T18:28:57.919Z","run":"20260930T182857Z-cmd"}
+{"ev":"bench.port","state":"open","port":"/dev/cu.usbmodem1101","host_ts":"2026-09-30T18:28:57.939Z","run":"20260930T182857Z-cmd"}
+{"ev":"raw","line":"ack_free\":6676}","host_ts":"2026-09-30T18:28:58.149Z","run":"20260930T182857Z-cmd"}
+{"t":571005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.149Z","run":"20260930T182857Z-cmd"}
+{"t":572005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.149Z","run":"20260930T182857Z-cmd"}
+{"t":573005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.149Z","run":"20260930T182857Z-cmd"}
+{"t":574005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.150Z","run":"20260930T182857Z-cmd"}
+{"t":575005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.150Z","run":"20260930T182857Z-cmd"}
+{"t":576005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.150Z","run":"20260930T182857Z-cmd"}
+{"t":577005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.150Z","run":"20260930T182857Z-cmd"}
+{"t":578005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.150Z","run":"20260930T182857Z-cmd"}
+{"t":579005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.150Z","run":"20260930T182857Z-cmd"}
+{"t":580005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.150Z","run":"20260930T182857Z-cmd"}
+{"t":581005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.150Z","run":"20260930T182857Z-cmd"}
+{"t":582005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.150Z","run":"20260930T182857Z-cmd"}
+{"t":583005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.150Z","run":"20260930T182857Z-cmd"}
+{"t":584005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.150Z","run":"20260930T182857Z-cmd"}
+{"t":585005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.151Z","run":"20260930T182857Z-cmd"}
+{"t":586005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.151Z","run":"20260930T182857Z-cmd"}
+{"t":587005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":267,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:58.770Z","run":"20260930T182857Z-cmd"}
+{"ev":"bench.send","cmd":"pd want 12000","t":587231,"t_est":true,"host_ts":"2026-09-30T18:28:58.996Z","run":"20260930T182857Z-cmd"}
+{"t":587340,"ev":"cmd","cmd":"pd want","mv":12000,"ok":true,"host_ts":"2026-09-30T18:28:59.185Z","run":"20260930T182857Z-cmd"}
+{"t":587341,"ev":"sm","from":"Ready","to":"EvalCap","on":"WANT","host_ts":"2026-09-30T18:28:59.185Z","run":"20260930T182857Z-cmd"}
+{"t":587341,"ev":"pd.want","mv":12000,"host_ts":"2026-09-30T18:28:59.185Z","run":"20260930T182857Z-cmd"}
+{"t":587341,"ev":"pd.sel","want":12000,"pos":2,"mv":9000,"ma":3000,"why":"below","host_ts":"2026-09-30T18:28:59.185Z","run":"20260930T182857Z-cmd"}
+{"t":587341,"ev":"sm","from":"EvalCap","to":"SelectCap","on":"DONE","host_ts":"2026-09-30T18:28:59.185Z","run":"20260930T182857Z-cmd"}
+{"t":587342,"ev":"pd.tx","type":"Request","id":2,"hdr":"0x1442","obj":["0x2004B12C"],"bytes":"12 12 12 13 86 42 14 2C B1 04 20 FF 14 FE A1","host_ts":"2026-09-30T18:28:59.185Z","run":"20260930T182857Z-cmd"}
+{"t":587344,"ev":"pd.txres","res":"sent","id":2,"host_ts":"2026-09-30T18:28:59.185Z","run":"20260930T182857Z-cmd"}
+{"t":587344,"ev":"pd.gcrc","id":2,"match":true,"host_ts":"2026-09-30T18:28:59.185Z","run":"20260930T182857Z-cmd"}
+{"t":587345,"ev":"pd.rx","type":"Accept","id":7,"ndo":0,"rev":1,"hdr":"0x0F63","cls":"ok","host_ts":"2026-09-30T18:28:59.185Z","run":"20260930T182857Z-cmd"}
+{"t":587345,"ev":"sm","from":"SelectCap","to":"TransSink","on":"RX_ACCEPT","host_ts":"2026-09-30T18:28:59.185Z","run":"20260930T182857Z-cmd"}
+{"t":587425,"ev":"pd.rx","type":"PS_RDY","id":0,"ndo":0,"rev":1,"hdr":"0x0166","cls":"ok","host_ts":"2026-09-30T18:28:59.185Z","run":"20260930T182857Z-cmd"}
+{"t":587425,"ev":"sm","from":"TransSink","to":"Ready","on":"RX_PS_RDY","host_ts":"2026-09-30T18:28:59.185Z","run":"20260930T182857Z-cmd"}
+{"t":587425,"ev":"contract","mv":9000,"ma":3000,"pos":2,"host_ts":"2026-09-30T18:28:59.185Z","run":"20260930T182857Z-cmd"}
+{"t":588005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":12000,"mv":9000,"poll_max_us":1589,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:28:59.811Z","run":"20260930T182857Z-cmd"}
+{"t":589005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":12000,"mv":9000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:29:00.832Z","run":"20260930T182857Z-cmd"}
+{"t":590005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":12000,"mv":9000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:29:01.853Z","run":"20260930T182857Z-cmd"}
+{"t":591005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":12000,"mv":9000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:29:02.684Z","run":"20260930T182857Z-cmd"}
+{"t":592005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":12000,"mv":9000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:29:03.710Z","run":"20260930T182857Z-cmd"}
+{"t":593005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":12000,"mv":9000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:29:04.723Z","run":"20260930T182857Z-cmd"}
+{"t":594005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":12000,"mv":9000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:29:05.752Z","run":"20260930T182857Z-cmd"}
+{"t":595005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":12000,"mv":9000,"poll_max_us":248,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:29:06.786Z","run":"20260930T182857Z-cmd"}
+{"ev":"bench.capture","state":"stop","lines":39,"t":595416,"t_est":true,"host_ts":"2026-09-30T18:29:07.198Z","run":"20260930T182857Z-cmd"}

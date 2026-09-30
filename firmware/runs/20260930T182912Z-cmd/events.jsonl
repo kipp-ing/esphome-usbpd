@@ -1,0 +1,23 @@
+{"ev":"bench.capture","state":"start","pid":31797,"host_ts":"2026-09-30T18:29:12.655Z","run":"20260930T182912Z-cmd"}
+{"ev":"bench.port","state":"open","port":"/dev/cu.usbmodem1101","host_ts":"2026-09-30T18:29:12.675Z","run":"20260930T182912Z-cmd"}
+{"t":602005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":12000,"mv":9000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:29:13.716Z","run":"20260930T182912Z-cmd"}
+{"ev":"bench.send","cmd":"pd want 5000","t":602013,"t_est":true,"host_ts":"2026-09-30T18:29:13.725Z","run":"20260930T182912Z-cmd"}
+{"t":602068,"ev":"cmd","cmd":"pd want","mv":5000,"ok":true,"host_ts":"2026-09-30T18:29:13.927Z","run":"20260930T182912Z-cmd"}
+{"t":602069,"ev":"sm","from":"Ready","to":"EvalCap","on":"WANT","host_ts":"2026-09-30T18:29:13.927Z","run":"20260930T182912Z-cmd"}
+{"t":602069,"ev":"pd.want","mv":5000,"host_ts":"2026-09-30T18:29:13.927Z","run":"20260930T182912Z-cmd"}
+{"t":602069,"ev":"pd.sel","want":5000,"pos":1,"mv":5000,"ma":3000,"why":"exact","host_ts":"2026-09-30T18:29:13.927Z","run":"20260930T182912Z-cmd"}
+{"t":602069,"ev":"sm","from":"EvalCap","to":"SelectCap","on":"DONE","host_ts":"2026-09-30T18:29:13.927Z","run":"20260930T182912Z-cmd"}
+{"t":602070,"ev":"pd.tx","type":"Request","id":3,"hdr":"0x1642","obj":["0x1004B12C"],"bytes":"12 12 12 13 86 42 16 2C B1 04 10 FF 14 FE A1","host_ts":"2026-09-30T18:29:13.927Z","run":"20260930T182912Z-cmd"}
+{"t":602072,"ev":"pd.txres","res":"sent","id":3,"host_ts":"2026-09-30T18:29:13.927Z","run":"20260930T182912Z-cmd"}
+{"t":602072,"ev":"pd.gcrc","id":3,"match":true,"host_ts":"2026-09-30T18:29:13.928Z","run":"20260930T182912Z-cmd"}
+{"t":602073,"ev":"pd.rx","type":"Accept","id":1,"ndo":0,"rev":1,"hdr":"0x0363","cls":"ok","host_ts":"2026-09-30T18:29:13.928Z","run":"20260930T182912Z-cmd"}
+{"t":602073,"ev":"sm","from":"SelectCap","to":"TransSink","on":"RX_ACCEPT","host_ts":"2026-09-30T18:29:13.928Z","run":"20260930T182912Z-cmd"}
+{"t":602193,"ev":"pd.rx","type":"PS_RDY","id":2,"ndo":0,"rev":1,"hdr":"0x0566","cls":"ok","host_ts":"2026-09-30T18:29:13.928Z","run":"20260930T182912Z-cmd"}
+{"t":602193,"ev":"sm","from":"TransSink","to":"Ready","on":"RX_PS_RDY","host_ts":"2026-09-30T18:29:13.928Z","run":"20260930T182912Z-cmd"}
+{"t":602193,"ev":"contract","mv":5000,"ma":3000,"pos":1,"host_ts":"2026-09-30T18:29:13.928Z","run":"20260930T182912Z-cmd"}
+{"t":603005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":1574,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:29:14.745Z","run":"20260930T182912Z-cmd"}
+{"t":604005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:29:15.775Z","run":"20260930T182912Z-cmd"}
+{"t":605005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:29:16.807Z","run":"20260930T182912Z-cmd"}
+{"t":606005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:29:17.845Z","run":"20260930T182912Z-cmd"}
+{"t":607005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Ready","vbus":true,"want":5000,"mv":5000,"poll_max_us":247,"i2c_errs":0,"stack_free":6676,"host_ts":"2026-09-30T18:29:18.671Z","run":"20260930T182912Z-cmd"}
+{"ev":"bench.capture","state":"stop","lines":19,"t":607212,"t_est":true,"host_ts":"2026-09-30T18:29:18.878Z","run":"20260930T182912Z-cmd"}
