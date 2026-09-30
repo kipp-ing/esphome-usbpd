@@ -109,4 +109,4 @@ Each step lists its rationale and source.
 | P9 | Stale bytes in the RX FIFO after config/HR → misparsed first frame | RX_FLUSH + PD_RESET before listening and after every HR | LNX L839-880, L1613-1621 |
 | P10 | Writing Switches0 with PDWN cleared while measuring → the source sees detach and drops VBUS | always keep PDWN1\|PDWN2 = 1 in every Switches0 write | DS T6; LNX L1148-1187 |
 | P11 | SW_RES issued while attached (e.g. on each retry) → Rd briefly still on (reset 0x03), but PD state, AUTO_CRC and Power are lost | do SW_RES only at boot | DS T16 L1348-1359 |
-| P12 | Polling too slowly to answer Source_Caps: the GoodCRC is HW, but the Request must be sent within tSenderResponse (24-30 ms; R3.2 nominal 27 ms) of the GoodCRC | poll ≤ ~5 ms while negotiating | PSE L1609-1622, Table 6-32 L1995-2050; R32 Table 7.9 L15757-15848 |
+| P12 | Polling too slowly to answer Source_Caps: the GoodCRC is HW, but the Request must start within tReceiverResponse (15 ms) of the Source_Caps EOP; the source's SenderResponseTimer (24-30 ms) is the hard backstop | poll ≤ ~5 ms while negotiating | PSE L1609-1622, Table 6-32 L1995-2050; R32 Table 7.9 L15757-15848 |
