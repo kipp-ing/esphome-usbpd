@@ -18,6 +18,7 @@ has pyserial, esptool 5.x, PlatformIO 6.1); scripts find it themselves.
 | `bench/run.py boot [--secs 10]` | new run: esptool hard reset, capture N s |
 | `bench/run.py replug [--off 25] [--secs 45]` | new run: capture, charger off (>= 25 s enforced), on, capture N s |
 | `bench/run.py cmd "pd want 9000" [--secs 5]` | new run: send console line, capture N s |
+| `bench/panic.py RUN [--elf P]` | decode ESP-IDF panic dumps (addr2line vs fw ELF) -> `bench.panic` events (`pc_fn/pc_src/ra_fn/ra_src/stack/frames`) |
 | `bench/q ...` | query (below) |
 | `bench/tests/run_all.sh` | offline self-tests (no board, no charger) |
 
