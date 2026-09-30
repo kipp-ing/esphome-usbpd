@@ -8,6 +8,7 @@
 #include "driver/usb_serial_jtag.h"
 #include "driver/usb_serial_jtag_vfs.h"
 
+#include "build_id.h"
 #ifndef BUILD_ID
 #define BUILD_ID ""
 #endif
@@ -40,12 +41,14 @@ void app_main(void) {
     setvbuf(stdin, NULL, _IONBF, 0);
     setvbuf(stdout, NULL, _IOLBF, 0);
     const char *bid = BUILD_ID[0] ? BUILD_ID : "dev";
+    // give the host up to 3 s to (re)enumerate so the boot line is not lost after a reset
+    for (int i = 0; i < 300 && !usb_serial_jtag_is_connected(); i++) vTaskDelay(pdMS_TO_TICKS(10));
     printf("{\"t\":%lu,\"ev\":\"boot\",\"build\":\"%s\",\"fw\":\"bench-hello\",\"reset\":%d}\n",
            now_ms(), bid, (int)esp_reset_reason());
     xTaskCreate(rx_task, "rx", 3072, NULL, 5, NULL);
     unsigned n = 0;
     for (;;) {
         vTaskDelay(pdMS_TO_TICKS(1000));
-        printf("{\"t\":%lu,\"ev\":\"hb\",\"n\":%u}\n", now_ms(), ++n);
+        printf("{\"t\":%lu,\"ev\":\"hb\",\"n\":%u,\"build\":\"%s\"}\n", now_ms(), ++n, bid);
     }
 }

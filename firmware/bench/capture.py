@@ -121,18 +121,23 @@ class Daemon:
 
     # -- serial
     def _open(self, port):
+        # USB-Serial-JTAG maps RTS/DTR onto chip reset: RTS=1 with DTR=0 resets the chip.
+        # Open with both asserted (what the OS does anyway), then drop RTS before DTR so the
+        # line pair never passes through the reset state.
         s = serial.Serial()
         s.port = port
         s.baudrate = 115200
         s.timeout = 0.2
-        # keep DTR/RTS deasserted: on USB-Serial-JTAG the RTS/DTR pair drives EN/BOOT
-        s.dtr = False
-        s.rts = False
         try:
             s.open()
         except (OSError, serial.SerialException):
-            # ptys (self-test) refuse modem-control ioctls; plain open as fallback
+            # ptys (self-test) may refuse modem-control ioctls; plain open as fallback
             s = serial.Serial(port, 115200, timeout=0.2, dsrdtr=False, rtscts=False)
+        for attr in ("rts", "dtr"):
+            try:
+                setattr(s, attr, False)
+            except (OSError, serial.SerialException):
+                pass
         return s
 
     def reader(self):
@@ -147,7 +152,7 @@ class Daemon:
                         self.state = "gone"
                         self.bench_event({"ev": "bench.port", "state": "gone", "port": self.port})
                         announced_gone = True
-                    time.sleep(0.3)
+                    time.sleep(0.1)  # poll fast: after a reset the board re-enumerates within ~1 s
                     continue
                 try:
                     ser = self._open(port)

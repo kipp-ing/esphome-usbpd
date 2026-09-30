@@ -6,3 +6,8 @@ test/host/build/
 runs/.capture.*
 runs/last
 runs/*/capture.err
+__pycache__/
+runs/*/build.log
+runs/*/flash.log
+runs/.last_flash.json
+**/src/build_id.h

@@ -8,6 +8,7 @@ Runs in a temp runs dir (BENCH_RUNS) with BENCH_PORT pointing at a symlink to th
 import json
 import os
 import pty
+import tty
 import select
 import subprocess
 import sys
@@ -28,6 +29,7 @@ class FakeBoard:
 
     def new_pty(self):
         self.master, slave = pty.openpty()
+        tty.setraw(slave)  # no line-discipline echo of the board's own output
         name = os.ttyname(slave)
         self.slave = slave  # keep slave open so the master does not see EOF
         tmp = self.link + ".tmp"
