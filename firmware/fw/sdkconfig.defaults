@@ -5,3 +5,6 @@ CONFIG_LOG_DEFAULT_LEVEL_WARN=y
 CONFIG_BOOTLOADER_LOG_LEVEL_WARN=y
 CONFIG_FREERTOS_HZ=1000
 CONFIG_ESPTOOLPY_FLASHSIZE_8MB=y
+# Main task runs everything (poll loop, PD SM, console). 3584 overflowed on the
+# first PD RX (M4). Buffers are now static; 8192 is the margin. hb.stack_free shows headroom.
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192

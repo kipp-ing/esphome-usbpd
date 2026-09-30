@@ -4,6 +4,7 @@
 #include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "sdkconfig.h"
 #include "esp_timer.h"
 #include "esp_system.h"
 #include "driver/usb_serial_jtag.h"
@@ -84,6 +85,7 @@ void app_main(void)
     log_str(&l, "build", BUILD_ID);
     log_str(&l, "reset_reason", reset_reason_str(esp_reset_reason()));
     log_uint(&l, "i2c_hz", FUSB302_I2C_HZ);
+    log_uint(&l, "stack", CONFIG_ESP_MAIN_TASK_STACK_SIZE);   /* compare with hb.stack_free */
     log_end(&l);
 
     uint8_t id = 0;
@@ -139,6 +141,9 @@ void app_main(void)
             log_uint(&l, "poll_max_us", poll_max_us);
             poll_max_us = 0;               /* per heartbeat window */
             log_uint(&l, "i2c_errs", fusb302_err_count());
+            /* min free bytes of this task's stack since boot (StackType_t is 1 B on IDF) */
+            log_uint(&l, "stack_free", (uint32_t)uxTaskGetStackHighWaterMark(NULL));
+            if (log_pool_miss()) log_uint(&l, "log_pool_miss", log_pool_miss());
             if (s_log_drops != reported_drops) {
                 log_uint(&l, "log_drops", s_log_drops);
                 reported_drops = s_log_drops;
