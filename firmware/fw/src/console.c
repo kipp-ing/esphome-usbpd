@@ -43,7 +43,7 @@ static void reply_err(const char *cmd, const char *err, const char *line)
 
 static void cmd_regs(void)
 {
-    char json[LOG_LINE_MAX - 64];
+    static char json[LOG_LINE_MAX - 64];   /* static: keep the 700-B dump off the main task stack */
     size_t n = 0;
     bool ok = true;
     json[n++] = '{';

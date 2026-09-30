@@ -860,6 +860,10 @@ int main(int argc, char **argv)
      * overhead per transaction (estimate; the firmware measures the real value). */
     printf("I2C per step worst case: %u transactions, %u bytes -> est. %u us\n",
            g_io_max_all, g_bytes_max_all, g_bytes_max_all * 45 / 2 + g_io_max_all * 50);
+    /* every log_begin in the fw core is paired with log_end and nesting stays
+     * within the static pool (fw/src/log.h "Stack budget") */
+    if (log_pool_busy()) { printf("  FAIL log pool slots leaked: %u\n", log_pool_busy()); total_fails++; }
+    if (log_pool_miss()) { printf("  FAIL log pool misses: %u\n", (unsigned)log_pool_miss()); total_fails++; }
     printf("%d scenario runs, %d failure(s)\n", ntests, total_fails);
     return total_fails ? 1 : 0;
 }

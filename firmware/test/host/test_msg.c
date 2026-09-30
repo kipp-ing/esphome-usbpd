@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "pd_msg.h"
+#include "log.h"
 
 static int fails, checks;
 #define CHECK(c) do { checks++; if (!(c)) { printf("  FAIL %s:%d %s\n", __FILE__, __LINE__, #c); fails++; } } while (0)
@@ -174,8 +175,30 @@ static void test_classify(void)
     CHECK(!strcmp(pd_tx_name(PD_DATA_SINK_CAP, 2), "Sink_Capabilities"));
 }
 
+/* log pool: nested lines up to LOG_POOL_N, overflow dropped + counted, slots released */
+static int s_sink_n;
+static void count_sink(const char *line, size_t len) { (void)line; (void)len; s_sink_n++; }
+static void test_log_pool(void)
+{
+    log_set_sink(count_sink);
+    uint32_t miss0 = log_pool_miss();
+    log_line_t l[LOG_POOL_N + 1];
+    for (int k = 0; k < LOG_POOL_N + 1; k++) { log_begin(&l[k], "nest"); log_uint(&l[k], "k", (uint32_t)k); }
+    CHECK(log_pool_miss() == miss0 + 1);
+    CHECK(l[LOG_POOL_N].buf == NULL);
+    for (int k = LOG_POOL_N; k >= 0; k--) log_end(&l[k]);
+    CHECK(s_sink_n == LOG_POOL_N);
+    for (int r = 0; r < 3 * LOG_POOL_N; r++) { log_line_t x; log_begin(&x, "again"); log_end(&x); }
+    CHECK(s_sink_n == 4 * LOG_POOL_N);
+    CHECK(log_pool_miss() == miss0 + 1);
+    CHECK(log_pool_busy() == 0);
+    CHECK(sizeof(log_line_t) <= 32);   /* the handle stays off-stack-cheap */
+    log_set_sink(NULL);
+}
+
 int main(void)
 {
+    test_log_pool();
     test_encode();
     test_decode();
     test_select();

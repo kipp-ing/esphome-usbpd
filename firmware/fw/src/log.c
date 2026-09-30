@@ -5,6 +5,19 @@
 static log_clock_fn s_clock;
 static log_sink_fn s_sink;
 
+/* line buffers live here, not on the caller's stack (see log.h "Stack budget") */
+static char s_pool[LOG_POOL_N][LOG_LINE_MAX];
+static uint8_t s_pool_used;          /* bitmask of acquired slots */
+static uint32_t s_pool_miss;
+
+uint32_t log_pool_miss(void) { return s_pool_miss; }
+unsigned log_pool_busy(void)
+{
+    unsigned n = 0;
+    for (int k = 0; k < LOG_POOL_N; k++) n += (s_pool_used >> k) & 1u;
+    return n;
+}
+
 void log_set_clock(log_clock_fn fn) { s_clock = fn; }
 void log_set_sink(log_sink_fn fn) { s_sink = fn; }
 uint32_t log_now_ms(void) { return s_clock ? s_clock() : 0; }
@@ -12,7 +25,7 @@ uint32_t log_now_ms(void) { return s_clock ? s_clock() : 0; }
 static void put(log_line_t *l, const char *s, size_t n)
 {
     /* reserve 16 bytes for ,"trunc":true}\n\0 */
-    if (l->overflow) return;
+    if (l->overflow || !l->buf) return;
     if (l->n + n + 16 > LOG_LINE_MAX) { l->overflow = true; l->n = l->mark; return; } /* drop partial field */
     memcpy(l->buf + l->n, s, n);
     l->n += n;
@@ -47,6 +60,17 @@ void log_begin(log_line_t *l, const char *ev)
     l->n = 0;
     l->mark = 0;
     l->overflow = false;
+    l->buf = NULL;
+    l->slot = -1;
+    for (int8_t k = 0; k < LOG_POOL_N; k++) {
+        if (!(s_pool_used & (1u << k))) {
+            s_pool_used |= (uint8_t)(1u << k);
+            l->slot = k;
+            l->buf = s_pool[k];
+            break;
+        }
+    }
+    if (!l->buf) { s_pool_miss++; return; }
     char tmp[24];
     int k = snprintf(tmp, sizeof tmp, "{\"t\":%lu", (unsigned long)log_now_ms());
     put(l, tmp, (size_t)k);
@@ -118,6 +142,7 @@ void log_uint_arr(log_line_t *l, const char *k, const uint32_t *v, size_t n)
 
 void log_end(log_line_t *l)
 {
+    if (!l->buf) return;                 /* pool exhausted in log_begin: dropped, counted */
     if (l->overflow) {
         /* never emit truncated JSON: mark it instead */
         const char *m = ",\"trunc\":true";
@@ -130,6 +155,9 @@ void log_end(log_line_t *l)
     l->buf[l->n] = 0;
     if (s_sink) s_sink(l->buf, l->n);
     else { fwrite(l->buf, 1, l->n, stdout); fflush(stdout); }
+    s_pool_used &= (uint8_t)~(1u << l->slot);
+    l->buf = NULL;
+    l->slot = -1;
 }
 
 void log_ev(const char *ev) { log_line_t l; log_begin(&l, ev); log_end(&l); }
