@@ -30,6 +30,16 @@ fix belongs to mr-engineer, see "Open failure" below. Charger left **OFF** (fw b
   - `bench/q --run 181143Z-replug --grep 'Guru|Detected in task|MEPC' --fields line --full --all`
   - `bench/q --run 181101Z-cmd --ev bench.panic --full` (regs crash)
 - Next bench step once fixed: `bench/flash.sh` then continue at checklist item 5.
+- **Fix (mr-engineer, fw `f53c73a` + `2f1a9d0`) — ready for bench.** Root cause: `log_line_t` embedded a 768-B
+  line buffer, so every logging frame put ~780 B on the stack; the RX path (`pd_drv_poll` → `rx_one` [several
+  log lines] → `log_rx`/`store_caps` + newlib snprintf) and `regs` (704-B json + 2 log lines) blew the 3584-B
+  main stack. Changes: line buffers now come from a 4-slot static pool in log.c (handle is ~32 B; exhaustion →
+  line dropped + counted), `regs` json buffer static, main task stack 8192. Largest fw frame now 160 B
+  (rx_one/console_exec, objdump); 9 V Request path (`drv_tx` → `fusb302_write_burst`) ≤ 96 B/frame. Host
+  tests green incl. new pool test and "no pool miss/leak over all 47 scenarios".
+- **Bench should verify:** `boot.stack` = 8192; `hb.stack_free` (min free bytes since boot) stays well above
+  ~1000 through attach → SRC_CAPS → Request → Accept → PS_RDY and after a `regs` command; no
+  `hb.log_pool_miss` field (present only if non-zero); `pd.rx` + `pd.caps` lines now appear; no `bench.panic`.
 
 ## Bench notes on spec §10 (from the runs above)
 - Q5 (delay after SW_RES): `fusb.id ok id=0x81 ver=8 rev=1` on all 11+22 boots with no extra delay → default holds. `regs` dump not yet available (crashes).
