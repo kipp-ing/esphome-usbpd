@@ -3,6 +3,9 @@
 Goal: the board requests a voltage (e.g. 9 V fixed PDO) and the source answers Accept → PS_RDY,
 proven by bench data in `runs/`.
 
+Layout: code paths below (`fw/`, `bench/`, `test/host/`, `runs/`, `STATUS.md`) live under
+`firmware/`; `docs/` is at the top level. The docs use paths relative to `firmware/`.
+
 ## Roles
 | Role | Owns | May NOT |
 |---|---|---|
@@ -23,8 +26,8 @@ Only mr-bench touches hardware. Engineer reads board data only via `bench/q`.
 - Never touch `~/dev/repos/PCB-pi-r0` except reading (spec texts, datasheet).
 
 ## Sources
-- USB-PD: `~/dev/repos/PCB-pi-r0/docs/spec/usb-pd/` (`pd-sink-essentials.txt`, R2.0 V1.3, R3.2 V1.2, `figures/`)
-- FUSB302 datasheet full text: `~/dev/repos/PCB-pi-r0/tmp/pdfs/fusb302mpx.txt`
+See `docs/sources.md`. The spec texts and the datasheet are not in this repository; locally they
+were read from a private copy (`~/dev/repos/PCB-pi-r0`).
 
 ## Process
 Commit after every step (small commits beat lost work). Firmware logs JSONL, one object per line,
