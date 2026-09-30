@@ -1,0 +1,9 @@
+{
+ "run": "20260930T180449Z-flash",
+ "scenario": "flash",
+ "created": "2026-09-30T18:04:49.090Z",
+ "fw_git_sha": "be5ccf1",
+ "build_id": "bde93c0-0930T180449",
+ "project": "bench/hello",
+ "result": "ok"
+}
