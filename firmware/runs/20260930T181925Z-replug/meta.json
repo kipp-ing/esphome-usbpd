@@ -1,0 +1,15 @@
+{
+ "run": "20260930T181925Z-replug",
+ "scenario": "replug",
+ "created": "2026-09-30T18:19:25.013Z",
+ "fw_git_sha": "2f1a9d0",
+ "build_id": "2f1a9d0-0930T181814",
+ "args": {
+  "secs": 45.0,
+  "keep": false,
+  "port_check": true
+ },
+ "ended": "2026-09-30T18:20:41.830Z",
+ "rc": 0,
+ "observed_build": "2f1a9d0-0930T181814"
+}
