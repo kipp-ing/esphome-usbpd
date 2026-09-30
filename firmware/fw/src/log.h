@@ -40,6 +40,11 @@ void log_str(log_line_t *l, const char *key, const char *v);        /* JSON-esca
 void log_hex8(log_line_t *l, const char *key, uint8_t v);           /* "0x1a" */
 void log_hex(log_line_t *l, const char *key, const uint8_t *p, size_t n); /* "a1b2c3" */
 void log_raw(log_line_t *l, const char *key, const char *json);     /* pre-formatted JSON value */
+/* spec §7 formats: hex numbers as strings with UPPER-case digits, "0x1042" */
+void log_hexn(log_line_t *l, const char *key, uint32_t v, int digits); /* "0x%0*X" */
+void log_bytes(log_line_t *l, const char *key, const uint8_t *p, size_t n);   /* "12 12 0A" */
+void log_hex32_arr(log_line_t *l, const char *key, const uint32_t *v, size_t n); /* ["0x0801912C",...] */
+void log_uint_arr(log_line_t *l, const char *key, const uint32_t *v, size_t n);  /* [5000,9000] */
 void log_end(log_line_t *l);                                         /* emits the line */
 
 /* one-liners */

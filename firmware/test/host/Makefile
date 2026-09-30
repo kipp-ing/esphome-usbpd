@@ -7,9 +7,9 @@ CFLAGS  += -I$(FW) -I.
 BUILD   := build
 
 # Firmware sources that are pure C (no ESP-IDF). Add pd_msg.c etc. here.
-FW_SRCS := $(FW)/pd_sm.c $(FW)/log.c
+FW_SRCS := $(FW)/pd_sm.c $(FW)/pd_msg.c $(FW)/log.c
 SIM_SRCS := fake_port.c scenario.c
-TESTS   := test_sm
+TESTS   := test_msg test_sm
 
 .PHONY: all test clean
 all: $(addprefix $(BUILD)/,$(TESTS))

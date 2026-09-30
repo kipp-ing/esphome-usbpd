@@ -81,6 +81,41 @@ void log_hex(log_line_t *l, const char *k, const uint8_t *p, size_t n)
 }
 void log_raw(log_line_t *l, const char *k, const char *json) { key(l, k); puts_(l, json); }
 
+static void put_hexn(log_line_t *l, uint32_t v, int digits)
+{
+    char tmp[16]; int n = snprintf(tmp, sizeof tmp, "\"0x%0*lX\"", digits, (unsigned long)v);
+    put(l, tmp, (size_t)n);
+}
+void log_hexn(log_line_t *l, const char *k, uint32_t v, int digits) { key(l, k); put_hexn(l, v, digits); }
+void log_bytes(log_line_t *l, const char *k, const uint8_t *p, size_t n)
+{
+    static const char hx[] = "0123456789ABCDEF";
+    key(l, k);
+    put(l, "\"", 1);
+    for (size_t i = 0; i < n; i++) {
+        char b[3] = {' ', hx[p[i] >> 4], hx[p[i] & 15]};
+        if (i) put(l, b, 3); else put(l, b + 1, 2);
+    }
+    put(l, "\"", 1);
+}
+void log_hex32_arr(log_line_t *l, const char *k, const uint32_t *v, size_t n)
+{
+    key(l, k);
+    put(l, "[", 1);
+    for (size_t i = 0; i < n; i++) { if (i) put(l, ",", 1); put_hexn(l, v[i], 8); }
+    put(l, "]", 1);
+}
+void log_uint_arr(log_line_t *l, const char *k, const uint32_t *v, size_t n)
+{
+    key(l, k);
+    put(l, "[", 1);
+    for (size_t i = 0; i < n; i++) {
+        char tmp[16]; int m = snprintf(tmp, sizeof tmp, i ? ",%lu" : "%lu", (unsigned long)v[i]);
+        put(l, tmp, (size_t)m);
+    }
+    put(l, "]", 1);
+}
+
 void log_end(log_line_t *l)
 {
     if (l->overflow) {
