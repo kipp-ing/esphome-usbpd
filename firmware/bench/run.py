@@ -130,6 +130,8 @@ def bench_event(run, obj):
 
 
 def cap_start(run):
+    if capture.running():  # hand the port over: one owner at a time
+        capture.main(["stop"])
     rc = capture.main(["start", "--run", run])
     if rc != 0:
         sys.exit(f"run: capture start failed rc={rc}")
@@ -252,7 +254,7 @@ def scenario(a):
     finally:
         if not a.keep:
             cap_stop()
-        boots = [e for e in events(run) if e.get("ev") == "boot"]
+        boots = [e for e in events(run) if e.get("ev") in ("boot", "hb") and e.get("build")]
         write_meta(run, ended=capture.host_ts(), rc=rc,
                    observed_build=(boots[-1].get("build") if boots else None))
     print(summary(run))
