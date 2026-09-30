@@ -51,8 +51,8 @@ static void cmd_regs(void)
         uint8_t v = 0;
         int rc = fusb302_read(s_dump_regs[i], &v);
         if (rc) ok = false;
-        if (rc) n += (size_t)snprintf(json + n, sizeof json - n, "%s\"0x%02x\":null", i ? "," : "", s_dump_regs[i]);
-        else    n += (size_t)snprintf(json + n, sizeof json - n, "%s\"0x%02x\":\"0x%02x\"", i ? "," : "", s_dump_regs[i], v);
+        if (rc) n += (size_t)snprintf(json + n, sizeof json - n, "%s\"0x%02X\":null", i ? "," : "", s_dump_regs[i]);
+        else    n += (size_t)snprintf(json + n, sizeof json - n, "%s\"0x%02X\":\"0x%02X\"", i ? "," : "", s_dump_regs[i], v);
     }
     json[n++] = '}';
     json[n] = 0;

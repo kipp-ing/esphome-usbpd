@@ -138,8 +138,10 @@ static void store_caps(pd_sm_t *sm, uint8_t ndo, const uint32_t *obj)
 static int rx_one(pd_sm_t *sm)   /* 1 = PE event posted, 0 = continue, -1 = stop */
 {
     const struct pd_port_ops *o = sm->ops;
-    uint8_t tok, h[2], d[4 * PD_MAX_OBJ], crc[4];
-    if (o->fifo_read(o->ctx, &tok, 1)) return -1;
+    /* §2.1 step 6.2: 2 transactions: token + header (3 B), then data + CRC (4*NDO + 4 B) */
+    uint8_t th[3], d[4 * PD_MAX_OBJ + 4];
+    if (o->fifo_read(o->ctx, th, sizeof th)) return -1;
+    uint8_t tok = th[0];
     bool other = false;
     uint8_t tc = tok & PD_RXTOK_MASK;
     if (tc == PD_RXTOK_SOP) {
@@ -153,11 +155,9 @@ static int rx_one(pd_sm_t *sm)   /* 1 = PE event posted, 0 = continue, -1 = stop
         log_end(&l);
         return -1;
     }
-    if (o->fifo_read(o->ctx, h, 2)) return -1;
-    uint16_t hdr = (uint16_t)(h[0] | (h[1] << 8));
+    uint16_t hdr = (uint16_t)(th[1] | (th[2] << 8));
     uint8_t ndo = PD_HDR_NDO(hdr), id = PD_HDR_ID(hdr), type = PD_HDR_TYPE(hdr);
-    if (ndo && o->fifo_read(o->ctx, d, 4u * ndo)) return -1;
-    if (o->fifo_read(o->ctx, crc, 4)) return -1;
+    if (o->fifo_read(o->ctx, d, 4u * ndo + 4u)) return -1;   /* CRC discarded */
     uint32_t obj[PD_MAX_OBJ] = {0};
     for (uint8_t k = 0; k < ndo; k++)
         obj[k] = (uint32_t)d[4 * k] | ((uint32_t)d[4 * k + 1] << 8) |
@@ -210,12 +210,16 @@ static int rx_one(pd_sm_t *sm)   /* 1 = PE event posted, 0 = continue, -1 = stop
 /* ---- poll (§2.1) ---------------------------------------------------------- */
 void pd_drv_poll(pd_sm_t *sm)
 {
-    uint8_t ia, ib, ir, st0, st1;
-    if (drv_read(sm, FUSB_INTERRUPTA, &ia) || drv_read(sm, FUSB_INTERRUPTB, &ib) ||
-        drv_read(sm, FUSB_INTERRUPT, &ir) || drv_read(sm, FUSB_STATUS0, &st0) ||
-        drv_read(sm, FUSB_STATUS1, &st1))
-        return;
-    (void)ib;
+    /* step 1: 0x3E Interrupta, 0x3F Interruptb, 0x40 Status0, 0x41 Status1, 0x42 Interrupt.
+     * Read-to-clear registers are read exactly once; on failure the step is abandoned. */
+    uint8_t r[5];
+#if PD_DRV_BURST_POLL
+    if (sm->ops->reg_read_burst(sm->ops->ctx, FUSB_INTERRUPTA, r, sizeof r)) return;
+#else
+    for (uint8_t k = 0; k < sizeof r; k++)
+        if (drv_read(sm, (uint8_t)(FUSB_INTERRUPTA + k), &r[k])) return;
+#endif
+    uint8_t ia = r[0], st0 = r[2], st1 = r[3], ir = r[4];
     sm->st0 = st0;
     sm->st1 = st1;
 

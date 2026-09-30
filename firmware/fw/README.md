@@ -31,7 +31,7 @@ carries `log_drops`. Lines too long for the buffer end in `"trunc":true`.
 |---|---|
 | `boot` | see above |
 | `hb` | every 1 s: `build`, `state`, `vbus`, `want`, `mv` (contract mV or 0), `poll_max_us` (slowest `pd_sm_step` since the last hb), `i2c_errs`, (`log_drops` when it changed) |
-| `poll.slow` | one `pd_sm_step` took > 2000 us: `us`, `state`, `n` (total count); rate-limited to 1 line/s |
+| `poll.slow` | one `pd_sm_step` took > 2000 us: `us` (last slow step), `state`, `n` (slow steps since the previous `poll.slow` line); rate-limited to 1 line/s |
 | `sm` | every real state change `from`,`to`,`on` (SAME rows are not logged) |
 | `sm.init` | `rows` (85), `states` (16), `state` |
 | `sm.unhandled` / `sm.qfull` | no row matched (`state`,`on`) / event queue full (`on`,`drops`) |
@@ -50,12 +50,13 @@ carries `log_drops`. Lines too long for the buffer end in `"trunc":true`.
 | `wr <reg> <val>` | `{"ev":"cmd","cmd":"wr","a":..,"v":..,"ok":true}` |
 | `pd want <mV>` | `{"ev":"cmd","cmd":"pd want","mv":9000,"ok":true}` (stores target, posts SM event) |
 | `reboot` | `{"ev":"cmd","cmd":"reboot","ok":true}` then esp_restart |
-Numbers accept decimal or `0x` hex. Errors: `{"ev":"cmd","cmd":..,"ok":false,"err":"bad_arg|unknown|line_too_long"}`.
+Numbers accept decimal or `0x` hex. All hex in the log is `"0x"` + upper-case digits, zero-padded to 2/4/8. Errors: `{"ev":"cmd","cmd":..,"ok":false,"err":"bad_arg|unknown|line_too_long"}`.
 
 ## Layout
 - `src/log.{c,h}` — JSONL logger, pure C (clock + sink injected)
 - `src/fusb302_regs.h` — datasheet register map + bits (pure defines)
 - `src/fusb302.{c,h}` — I2C HAL @ 400 kHz (SDA 21, SCL 22, addr 0x22), no init policy
+- Poll (§2.1): one 5-byte burst read 0x3E..0x42 per step (never into FIFOS 0x43); build with `-DPD_DRV_BURST_POLL=0` for 5 single reads. RX: 2 FIFO transactions per frame, max 8 frames per step.
 - `src/pd_msg.{c,h}` — L2 codec: header, classify, PDO decode, select, RDO, TX burst (pure)
 - `src/pd_drv.{c,h}` — L1 driver poll (§2.1): IRQ/status reads, TX result, VBUS edge, RX FIFO,
   MessageID/dup filter; posts events into the SM queue

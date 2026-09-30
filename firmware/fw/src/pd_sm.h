@@ -15,6 +15,7 @@
 struct pd_port_ops {
     void *ctx;
     int (*reg_read)(void *ctx, uint8_t reg, uint8_t *val);          /* 0 = ok */
+    int (*reg_read_burst)(void *ctx, uint8_t reg, uint8_t *buf, size_t n); /* auto-increment, never past 0x42 */
     int (*reg_write)(void *ctx, uint8_t reg, uint8_t val);
     int (*fifo_read)(void *ctx, uint8_t *buf, size_t n);             /* RX FIFO */
     int (*fifo_write)(void *ctx, const uint8_t *buf, size_t n);      /* TX FIFO, one burst */

@@ -9,6 +9,11 @@
 
 #define PD_DRV_TX_GUARD_MS 10   /* §5 TX guard */
 #define PD_DRV_RX_MAX_FRAMES 8  /* per poll: bounds the loop on a stuck RX_EMPTY */
+/* §2.1 step 1: 1 = one 5-byte burst read of 0x3E-0x42 (default); 0 = 5 single reads
+ * in the same order (A/B fallback, §10 Q16). */
+#ifndef PD_DRV_BURST_POLL
+#define PD_DRV_BURST_POLL 1
+#endif
 
 void pd_drv_poll(pd_sm_t *sm);                                   /* §2.1 steps 1-6 */
 int  drv_tx(pd_sm_t *sm, uint8_t type, uint8_t ndo, const uint32_t *objs); /* §2.2 */

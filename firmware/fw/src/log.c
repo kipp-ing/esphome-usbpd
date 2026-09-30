@@ -68,7 +68,7 @@ void log_bool(log_line_t *l, const char *k, bool v) { key(l, k); puts_(l, v ? "t
 void log_str(log_line_t *l, const char *k, const char *v) { key(l, k); put_escaped(l, v ? v : ""); }
 void log_hex8(log_line_t *l, const char *k, uint8_t v)
 {
-    char tmp[8]; int n = snprintf(tmp, sizeof tmp, "\"0x%02x\"", v);
+    char tmp[8]; int n = snprintf(tmp, sizeof tmp, "\"0x%02X\"", v);
     key(l, k); put(l, tmp, (size_t)n);
 }
 void log_hex(log_line_t *l, const char *k, const uint8_t *p, size_t n)

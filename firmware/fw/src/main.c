@@ -39,12 +39,13 @@ static void usj_sink(const char *line, size_t n)
 /* ---- pd_port_ops over the FUSB302 HAL ------------------------------------ */
 static int p_rd(void *c, uint8_t r, uint8_t *v) { (void)c; return fusb302_read(r, v); }
 static int p_wr(void *c, uint8_t r, uint8_t v) { (void)c; return fusb302_write(r, v); }
+static int p_rdb(void *c, uint8_t r, uint8_t *b, size_t n) { (void)c; return fusb302_read_burst(r, b, n); }
 static int p_frd(void *c, uint8_t *b, size_t n) { (void)c; return fusb302_fifo_read(b, n); }
 static int p_fwr(void *c, const uint8_t *b, size_t n) { (void)c; return fusb302_fifo_write(b, n); }
 static uint32_t p_now(void *c) { (void)c; return clock_ms(); }
 
 static const struct pd_port_ops s_ops = {
-    .ctx = NULL, .reg_read = p_rd, .reg_write = p_wr,
+    .ctx = NULL, .reg_read = p_rd, .reg_read_burst = p_rdb, .reg_write = p_wr,
     .fifo_read = p_frd, .fifo_write = p_fwr, .now_ms = p_now,
 };
 
@@ -102,7 +103,7 @@ void app_main(void)
 
     uint32_t next_hb = clock_ms();
     uint32_t reported_drops = 0;
-    uint32_t poll_max_us = 0, slow_count = 0, slow_last_ms = 0;
+    uint32_t poll_max_us = 0, slow_n = 0, slow_last_ms = 0;
     bool slow_logged = false;
     for (;;) {
         uint8_t in[32];
@@ -114,13 +115,14 @@ void app_main(void)
         uint32_t us = (uint32_t)(esp_timer_get_time() - t0);
         if (us > poll_max_us) poll_max_us = us;
         if (us > POLL_SLOW_US) {
-            slow_count++;
+            slow_n++;                      /* slow steps since the last poll.slow line */
             uint32_t ms = clock_ms();
             if (!slow_logged || (int32_t)(ms - slow_last_ms) >= POLL_SLOW_GAP_MS) {
                 log_begin(&l, "poll.slow");
                 log_uint(&l, "us", us);
                 log_str(&l, "state", pd_sm_state_name(s_sm.state));
-                log_uint(&l, "n", slow_count);
+                log_uint(&l, "n", slow_n);
+                slow_n = 0;
                 log_end(&l);
                 slow_logged = true;
                 slow_last_ms = ms;
