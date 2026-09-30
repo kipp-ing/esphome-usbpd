@@ -1,0 +1,73 @@
+{"ev":"bench.capture","state":"start","pid":24900,"host_ts":"2026-09-30T18:18:34.130Z","run":"20260930T181814Z-flash"}
+{"ev":"bench.port","state":"open","port":"/dev/cu.usbmodem1101","host_ts":"2026-09-30T18:18:34.150Z","run":"20260930T181814Z-flash"}
+{"t":1005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":254,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:18:34.971Z","run":"20260930T181814Z-flash"}
+{"t":2005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:18:36.004Z","run":"20260930T181814Z-flash"}
+{"t":3005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:18:37.031Z","run":"20260930T181814Z-flash"}
+{"t":4005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:18:38.065Z","run":"20260930T181814Z-flash"}
+{"t":5005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:18:39.105Z","run":"20260930T181814Z-flash"}
+{"ev":"bench.send","cmd":"regs","t":5783,"t_est":true,"host_ts":"2026-09-30T18:18:39.884Z","run":"20260930T181814Z-flash"}
+{"t":5928,"ev":"regs","v":{"0x01":"0x81","0x02":"0x03","0x03":"0x20","0x04":"0x31","0x05":"0x60","0x06":"0x24","0x07":"0x00","0x08":"0x02","0x09":"0x07","0x0A":"0x00","0x0B":"0x0F","0x0D":"0x0F","0x0E":"0x00","0x0F":"0x00","0x10":"0x00","0x3C":"0x0C","0x3D":"0x00","0x40":"0x00","0x41":"0x28"},"ok":true,"host_ts":"2026-09-30T18:18:39.938Z","run":"20260930T181814Z-flash"}
+{"t":6005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":277,"i2c_errs":0,"stack_free":6916,"host_ts":"2026-09-30T18:18:40.148Z","run":"20260930T181814Z-flash"}
+{"t":7005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":6916,"host_ts":"2026-09-30T18:18:40.969Z","run":"20260930T181814Z-flash"}
+{"t":8005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":6916,"host_ts":"2026-09-30T18:18:42.004Z","run":"20260930T181814Z-flash"}
+{"t":9005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":6916,"host_ts":"2026-09-30T18:18:43.045Z","run":"20260930T181814Z-flash"}
+{"t":10005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":6916,"host_ts":"2026-09-30T18:18:44.094Z","run":"20260930T181814Z-flash"}
+{"t":11005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":6916,"host_ts":"2026-09-30T18:18:45.120Z","run":"20260930T181814Z-flash"}
+{"t":12005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":6916,"host_ts":"2026-09-30T18:18:46.135Z","run":"20260930T181814Z-flash"}
+{"t":13005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":6916,"host_ts":"2026-09-30T18:18:47.155Z","run":"20260930T181814Z-flash"}
+{"t":14005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":6916,"host_ts":"2026-09-30T18:18:47.995Z","run":"20260930T181814Z-flash"}
+{"t":15005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":6916,"host_ts":"2026-09-30T18:18:49.021Z","run":"20260930T181814Z-flash"}
+{"t":16005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":6916,"host_ts":"2026-09-30T18:18:50.058Z","run":"20260930T181814Z-flash"}
+{"t":17005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":6916,"host_ts":"2026-09-30T18:18:51.089Z","run":"20260930T181814Z-flash"}
+{"t":18005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":248,"i2c_errs":0,"stack_free":6916,"host_ts":"2026-09-30T18:18:52.111Z","run":"20260930T181814Z-flash"}
+{"ev":"bench.capture","state":"stop","lines":19,"t":18006,"t_est":true,"host_ts":"2026-09-30T18:18:52.112Z","run":"20260930T181814Z-flash"}
+{"ev":"bench.reset","via":"esptool","host_ts":"2026-09-30T18:18:52.196Z","run":"20260930T181814Z-flash"}
+{"ev":"bench.capture","state":"start","pid":25415,"host_ts":"2026-09-30T18:18:52.925Z","run":"20260930T181814Z-flash"}
+{"ev":"bench.port","state":"open","port":"/dev/cu.usbmodem1101","host_ts":"2026-09-30T18:18:52.944Z","run":"20260930T181814Z-flash"}
+{"t":1006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":254,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:18:53.990Z","run":"20260930T181814Z-flash"}
+{"t":2006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:18:54.812Z","run":"20260930T181814Z-flash"}
+{"t":3006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:18:55.839Z","run":"20260930T181814Z-flash"}
+{"t":4006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:18:56.851Z","run":"20260930T181814Z-flash"}
+{"t":5006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:18:57.892Z","run":"20260930T181814Z-flash"}
+{"t":6006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:18:58.931Z","run":"20260930T181814Z-flash"}
+{"t":7006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:18:59.963Z","run":"20260930T181814Z-flash"}
+{"t":8006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:00.796Z","run":"20260930T181814Z-flash"}
+{"t":9006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:01.819Z","run":"20260930T181814Z-flash"}
+{"t":10006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:02.840Z","run":"20260930T181814Z-flash"}
+{"t":11006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:03.873Z","run":"20260930T181814Z-flash"}
+{"t":12006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:04.905Z","run":"20260930T181814Z-flash"}
+{"t":13006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:05.948Z","run":"20260930T181814Z-flash"}
+{"t":14006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:06.966Z","run":"20260930T181814Z-flash"}
+{"t":15006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:07.788Z","run":"20260930T181814Z-flash"}
+{"t":16006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:08.808Z","run":"20260930T181814Z-flash"}
+{"t":17006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:09.849Z","run":"20260930T181814Z-flash"}
+{"t":18006,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:10.892Z","run":"20260930T181814Z-flash"}
+{"ev":"bench.send","cmd":"reboot","t":18594,"t_est":true,"host_ts":"2026-09-30T18:19:11.481Z","run":"20260930T181814Z-flash"}
+{"t":18701,"ev":"cmd","cmd":"reboot","ok":true,"host_ts":"2026-09-30T18:19:11.515Z","run":"20260930T181814Z-flash"}
+{"ev":"raw","line":"ESP-ROM:esp32c6-20220919","host_ts":"2026-09-30T18:19:11.722Z","run":"20260930T181814Z-flash"}
+{"ev":"raw","line":"Build:Sep 19 2022","host_ts":"2026-09-30T18:19:11.722Z","run":"20260930T181814Z-flash"}
+{"ev":"raw","line":"rst:0xc (SW_CPU),boot:0x4f (SPI_FAST_FLASH_BOOT)","host_ts":"2026-09-30T18:19:11.722Z","run":"20260930T181814Z-flash"}
+{"ev":"raw","line":"Saved PC:0x4001975a","host_ts":"2026-09-30T18:19:11.723Z","run":"20260930T181814Z-flash"}
+{"ev":"raw","line":"SPIWP:0xee","host_ts":"2026-09-30T18:19:11.723Z","run":"20260930T181814Z-flash"}
+{"ev":"raw","line":"mode:DIO, clock div:2","host_ts":"2026-09-30T18:19:11.723Z","run":"20260930T181814Z-flash"}
+{"ev":"raw","line":"load:0x40875730,len:0x123c","host_ts":"2026-09-30T18:19:11.723Z","run":"20260930T181814Z-flash"}
+{"ev":"raw","line":"load:0x4086b910,len:0xc5c","host_ts":"2026-09-30T18:19:11.723Z","run":"20260930T181814Z-flash"}
+{"ev":"raw","line":"load:0x4086e610,len:0x2f04","host_ts":"2026-09-30T18:19:11.723Z","run":"20260930T181814Z-flash"}
+{"ev":"raw","line":"entry 0x4086b910","host_ts":"2026-09-30T18:19:11.723Z","run":"20260930T181814Z-flash"}
+{"ev":"raw","line":"W (118) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig","host_ts":"2026-09-30T18:19:11.723Z","run":"20260930T181814Z-flash"}
+{"ev":"raw","line":"W (118) spi_flash: Detected size(16384k) larger than the size in the binary image header(8192k). Using the size in the binary image header.","host_ts":"2026-09-30T18:19:11.723Z","run":"20260930T181814Z-flash"}
+{"t":3,"ev":"boot","build":"2f1a9d0-0930T181814","reset_reason":"sw","i2c_hz":400000,"stack":8192,"host_ts":"2026-09-30T18:19:11.723Z","run":"20260930T181814Z-flash"}
+{"t":4,"ev":"fusb.id","ok":true,"id":"0x81","ver":8,"rev":1,"host_ts":"2026-09-30T18:19:11.724Z","run":"20260930T181814Z-flash"}
+{"t":5,"ev":"sm.init","rows":85,"states":16,"state":"Unattached","host_ts":"2026-09-30T18:19:11.724Z","run":"20260930T181814Z-flash"}
+{"t":6,"ev":"vbus","on":false,"host_ts":"2026-09-30T18:19:11.724Z","run":"20260930T181814Z-flash"}
+{"t":6,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":371,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:11.724Z","run":"20260930T181814Z-flash"}
+{"t":1005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":253,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:12.749Z","run":"20260930T181814Z-flash"}
+{"t":2005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:13.783Z","run":"20260930T181814Z-flash"}
+{"t":3005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:14.828Z","run":"20260930T181814Z-flash"}
+{"t":4005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:15.655Z","run":"20260930T181814Z-flash"}
+{"t":5005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:16.687Z","run":"20260930T181814Z-flash"}
+{"t":6005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:17.716Z","run":"20260930T181814Z-flash"}
+{"t":7005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:18.742Z","run":"20260930T181814Z-flash"}
+{"t":8005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:19.783Z","run":"20260930T181814Z-flash"}
+{"t":9005,"ev":"hb","build":"2f1a9d0-0930T181814","state":"Unattached","vbus":false,"want":5000,"mv":0,"poll_max_us":247,"i2c_errs":0,"stack_free":7044,"host_ts":"2026-09-30T18:19:20.818Z","run":"20260930T181814Z-flash"}
+{"ev":"bench.capture","state":"stop","lines":45,"t":9212,"t_est":true,"host_ts":"2026-09-30T18:19:21.026Z","run":"20260930T181814Z-flash"}
