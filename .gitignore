@@ -3,3 +3,6 @@ runs/*/raw.log
 fw/.pio/
 test/host/build/
 *.o
+runs/.capture.*
+runs/last
+runs/*/capture.err
