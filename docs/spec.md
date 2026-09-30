@@ -42,7 +42,7 @@ Three layers. Only the policy layer is table-driven. The lower two are plain C w
 
 | Layer | Suggested file | Owns | Must not |
 |---|---|---|---|
-| **L1 driver / poll** | `fusb302.c` | All I2C. Init writes. The per-step poll (§2.1). TX burst write. RX FIFO read. TX result detection. VBUS edge detection. It posts events into the SM queue. It owns `tx_msgid`, `rx_last_id` and the duplicate filter (protocol-layer duties per PSE §6.7). | Decide policy. Keep timers other than the TX guard. |
+| **L1 driver / poll** | `pd_drv.c` (pure C over `pd_port_ops`, runs in the host sim; `fusb302.c` stays the raw ESP-IDF I2C HAL) | All I2C. Init writes. The per-step poll (§2.1). TX burst write. RX FIFO read. TX result detection. VBUS edge detection. It posts events into the SM queue. It owns `tx_msgid`, `rx_last_id` and the duplicate filter (protocol-layer duties per PSE §6.7). | Decide policy. Keep timers other than the TX guard. |
 | **L2 protocol / codec** | `pd_msg.c` | Pure encode/decode: header pack/unpack, PDO decode, RDO build, Sink_Caps PDO build, TX byte-burst build, message classification (§6). No I/O. | Touch registers or the SM. |
 | **L3 policy + Type-C** | `pd_sm.c` table | States, transitions, guards and actions (§3, §4). PE timers via `pd_timer_*`. Target selection. | Touch the FIFO directly (it calls L1 `drv_tx()` / `drv_hard_reset()` / `drv_write()`). |
 
@@ -58,8 +58,12 @@ The skeleton semantics (`fw/src/pd_sm.c`) stay as they are:
 
 The order is mandatory:
 
-1. Read Interrupta (0x3E), Interruptb (0x3F) and Interrupt (0x42), **once each**. They are read-to-clear, so keep the values in locals.
-   Then read Status0 (0x40) and Status1 (0x41). Keep Status0 in `sm->st0` for the CC sampler.
+1. Read 0x3E–0x42 in **one 5-byte burst read**: register address 0x3E, then 5 data bytes. The result is Interrupta, Interruptb, Status0, Status1 and Interrupt, in that order.
+   - The chip auto-increments the address on multi-byte reads: "Read Data K, K+1 … K+N-1" (DS L693–717, Figure 14).
+   - The only register without auto-increment is FIFOS 0x43 (DS L1062, note 11 L1068). A burst must therefore never extend past 0x42.
+   - The three interrupt registers are read-to-clear and are read exactly once per poll. Keep all 5 values in locals, and keep Status0 in `sm->st0` for the CC sampler.
+   - Provide a compile-time fallback, `PD_DRV_BURST_POLL=0`, that uses 5 single reads in the same order, for an A/B test if Q16 fails.
+   - If the read fails, abandon the step. Interrupt bits cleared by that failed read are lost, and `i2c.err` shows it.
    (K:reg; K:init A5/C5; DS interrupt tables.)
 2. **If `FUSB_IA_HARDRST`:**
    - Post `EV_HR_RX` and log `pd.hr {dir:"rx"}`.
@@ -70,8 +74,9 @@ The order is mandatory:
    - `FUSB_IA_RETRYFAIL`: clear `tx_pending`. Post `EV_TX_FAIL`. Log `pd.txres {res:"fail"}`.
    - `FUSB_IA_TXSENT`: TX success, with `res:"sent"`.
    - `FUSB_I_COLLISION` (Interrupt 0x42):
-     - First time for this message: rewrite the same burst (§6.4) and log `pd.txres {res:"coll"}`.
-     - Second time: treat as `EV_TX_FAIL`.
+     - First time for this message: rewrite the same burst (§6.4), including the TX flush. Log `pd.txres {res:"coll"}` and restart `tx_deadline` (+10 ms).
+     - Second time: `EV_TX_FAIL`, logged `pd.txres {res:"fail", coll:true}`.
+   - An I2C error while writing the burst (in `drv_tx` or in a collision resend) gives `EV_TX_FAIL` immediately. Log `pd.txres {res:"fail", i2c:true}` and clear `tx_pending`.
    - Otherwise, if `now ≥ tx_deadline` (write time + 10 ms): TX success with `res:"tmo"`. See §10 Q2.
    - **TX success** means:
      1. `tx_pending=0`
@@ -88,7 +93,10 @@ The order is mandatory:
       - `tok & 0xE0 == 0xE0` (SOP): continue.
       - `tok & 0xE0` ∈ {0xC0, 0xA0, 0x80, 0x60} (SOP', SOP'', SOP'_Debug, SOP''_Debug): consume the frame as below, log `pd.rx {sop:"other", cls:"ignored"}`, and continue the loop.
       - Anything else: write Control1 = 0x04 (RX flush), log `pd.rxraw {tok}`, and stop the loop (K:fifo).
-   2. Read 2 header bytes (LE). NDO = `(hdr>>12)&7`. Read `4·NDO` data bytes, then 4 CRC bytes (discard the CRC).
+   2. The frame is read in **2 transactions**. FIFOS reads repeat on 0x43 without auto-increment, so a multi-byte read pops consecutive FIFO bytes (DS L1062, L1068):
+      1. Token and 2 header bytes (3 bytes; step 6.1 above uses byte 0).
+      2. `4·NDO` data bytes plus 4 CRC bytes, read together (the CRC is discarded). For a GoodCRC this is just the 4 CRC bytes.
+      A bad token after the 3-byte read is handled as in 6.1: flush, then stop.
    3. Classify (§6.2):
       - **GoodCRC** (control type 1, NDO 0): never a PE event. If `tx_pending && id == tx_id`, it is TX success with `res:"gcrc"`. Log `pd.gcrc {id, match}`. Continue the loop.
       - **Duplicate:** `id == rx_last_id` and type ≠ Soft_Reset. Log `pd.dup {type,id}`. Continue the loop. No event is posted. The chip has already sent GoodCRC automatically, which is correct.
@@ -98,7 +106,8 @@ The order is mandatory:
         3. log `pd.rx`
         4. post the event from §6.2
         5. stop the loop, because at most one PE message is handled per poll. The rest stay in the FIFO for the next poll.
-   4. Re-read Status1 before each iteration.
+   4. Re-read Status1 (single read of 0x41) before each iteration after the first. The first iteration uses Status1 from the step-1 burst.
+   5. At most **8 frames** per poll. GoodCRC, duplicate and ignored frames do not stop the loop; the first frame that posts a PE event does.
 7. The skeleton then services timers (`service_timers`) and drains the queue. Hardware events are posted before timer events in the same step (ENG).
 
 The driver always does steps 1–6 in every state, including Unattached. That is safe because Switches1 has `AUTO_CRC` = 0 while unattached (§3). RX of noise while unattached is harmless: it is classified and dropped as unhandled.
@@ -418,6 +427,14 @@ The `cls` values in `pd.rx` are `ok`, `unexpected`, `unsupported` and `ignored`.
 
 **Source PDO decode.** For a Fixed PDO (bits 31:30 = 00): `mv = ((pdo>>10)&0x3FF)*50`, `ma = (pdo&0x3FF)*10`. Bit 27 is `unconstrained`, logged only. Kind letters used in logs: `F` fixed, `B` battery (01), `V` variable (10), `A` augmented (11).
 
+Non-fixed PDOs are decoded for the log only and are never selected. In `pd.caps`, `mv` is the maximum voltage:
+
+| Kind | mv | ma |
+|---|---|---|
+| Battery | `((pdo>>20)&0x3FF)*50` | `((pdo&0x3FF)*250) * 1000 / mv` (bits 9:0 are max power in 250 mW units, converted to mA at max voltage; 0 if mv = 0) |
+| Variable | `((pdo>>20)&0x3FF)*50` | `(pdo&0x3FF)*10` |
+| Augmented (PPS) | `((pdo>>17)&0xFF)*100` | `(pdo&0x7F)*50` |
+
 ### 6.3 Data objects we build
 
 **Request RDO (Fixed):**
@@ -528,14 +545,16 @@ With D1 plus the APDO as PDO5 and want 21000: pos 4 (why below); the APDO is ign
 
 ## 7. JSONL logging contract
 
-Every line is one JSON object, built with `log.h`. `t` is milliseconds since boot and `ev` is the event name. Hex values are strings, `"0x1042"`. Byte strings are space-separated upper-case hex. Field names are exact, because `bench/q --where k=v` matches on them. `bench/q --type` filters on `type` and `--state` filters on `state`.
+Every line is one JSON object, built with `log.h`. `t` is milliseconds since boot and `ev` is the event name. Hex values are strings: lower-case `0x` prefix, **upper-case digits**, zero-padded to the natural width (2 for registers and bytes, 4 for headers, 8 for objects), e.g. `"0x07"`, `"0x1042"`, `"0x2004B12C"`. This applies to **every** line, including the older `fusb.id`, `regs`, `cmd` and `i2c.err` lines, which must switch to it (`log_hex8`). Byte strings are space-separated upper-case hex. Field names are exact, because `bench/q --where k=v` matches on them. `bench/q --type` filters on `type` and `--state` filters on `state`.
 
 | ev | Fields | When |
 |---|---|---|
 | boot, fusb.id, cmd, regs, i2c.err | as `fw/README.md` today | unchanged |
 | sm.init | rows (expanded C rows), states | init |
-| hb | state, vbus (bool), want, mv (contract mV or 0) | every 1 s |
-| sm | from, to, on (event name without `EV_`, e.g. `RX_SRC_CAPS`) | every real state change (not SAME) |
+| hb | state, vbus (bool), want, mv (contract mV or 0), poll_max_us (the longest `pd_sm_step` since the last hb) | every 1 s |
+| poll.slow | us, state, n (slow steps since the last line) | a `pd_sm_step` took > 2000 µs; at most 1 line per second |
+| sm.qfull | on (the dropped event), drops (total so far) | a post found the 16-entry queue full; the event is dropped |
+| sm | from, to, on (event name without `EV_`, e.g. `RX_SRC_CAPS`) | every real state change (not SAME). It is logged **before** the row's action runs, so action logs (`pd.tx` …) follow the transition that caused them. |
 | sm.unhandled | state, on | no row matched |
 | vbus | on (bool) | driver VBUS edge |
 | cc | cc (1\|2), lvl1, lvl2 | Attached entry |
@@ -546,7 +565,7 @@ Every line is one JSON object, built with `log.h`. `t` is milliseconds since boo
 | pd.caps.bad | hdr, obj0 | PDO1 not fixed |
 | pd.sel | want, pos, mv, ma, why (`exact\|below\|min\|fallback`) | EvalCap entry |
 | pd.tx | type, id, hdr, obj (array, omitted if NDO 0), bytes (the whole burst) | `drv_tx` |
-| pd.txres | res (`sent\|gcrc\|tmo\|fail\|coll`), id | TX result |
+| pd.txres | res (`sent\|gcrc\|tmo\|fail\|coll`), id, plus `coll:true` or `i2c:true` on those fail causes | TX result |
 | pd.gcrc | id, match (bool) | every GoodCRC frame read from the FIFO |
 | pd.dup | type, id | duplicate dropped |
 | pd.rxraw | tok | bad token, RX flushed |
@@ -561,6 +580,7 @@ Every line is one JSON object, built with `log.h`. `t` is milliseconds since boo
 Rules:
 
 - No other `ev` names without a spec update.
+- `pd.gcrc match`: while TX is pending, the id equals `tx_id`. Once TX_SENT has already resolved the message, the id equals the last `tx_id`, and the line is logged only.
 - Extra fields are allowed.
 - Log after the I2C action, so a failed write shows as `i2c.err` before it.
 - `LOG_LINE_MAX` is 768. `pd.rx`, with 7 objects, is well under that.
@@ -708,3 +728,5 @@ Each question has a default, which is what the firmware implements now, and a be
 | Q13 | Attach gated on VBUS before CC debounce (a deviation from Type-C Unattached.SNK, which starts on Rp) | Yes: VBUS_ON triggers AttachWait | `vbus on=true` precedes the `cc` line on every attach; attach works on every M5 cycle |
 | Q14 | Does an R3 source fall back to R2.0 after our R2.0 Request? | We always send SpecRev 01 and accept both | `bench/q --ev pd.rx --where type=Accept --fields rev` shows 1 (R2.0); 2 is also acceptable as long as M5 passes |
 | Q15 | Is TransDefault 1000 ms / Discovery 2500 ms enough for the real charger's HR recovery? | Values from §5 (ENG from R32 timings) | After any `pd.hr`: `vbus on=false` then `on=true` then `sm to=WaitCaps`, all without `sm to=Unattached` via `on=TIMEOUT` |
+| Q16 | Does the 5-byte burst read of 0x3E–0x42 clear the R/C interrupt registers the same way single reads do? | Yes (DS Figure 14, L693–717); burst on | M4/M5 pass with the burst. On failure (missed `pd.hr dir=rx` or TX results, `res=tmo` > 0), rebuild with `PD_DRV_BURST_POLL=0` and repeat the same run: the difference is the answer |
+| Q17 | Does one poll step fit in 2 ms at 400 kHz I2C? | Burst poll plus 2-transaction RX. Idle step = 1 transaction | `bench/q --ev hb --fields poll_max_us --tail 20` is ≤ 2000 in the steady state; `bench/q --ev poll.slow --count` ≤ 1 per attach (the caps + Request step) |
