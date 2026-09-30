@@ -21,6 +21,8 @@
 
 #define HB_PERIOD_MS 1000
 #define POLL_TICKS   1          /* CONFIG_FREERTOS_HZ=1000 -> 1 ms */
+#define POLL_SLOW_US 2000       /* one pd_sm_step (I2C at 400 kHz) must fit in 2 ms */
+#define POLL_SLOW_GAP_MS 1000   /* rate limit for poll.slow lines */
 
 static uint32_t s_log_drops;
 
@@ -100,12 +102,30 @@ void app_main(void)
 
     uint32_t next_hb = clock_ms();
     uint32_t reported_drops = 0;
+    uint32_t poll_max_us = 0, slow_count = 0, slow_last_ms = 0;
+    bool slow_logged = false;
     for (;;) {
         uint8_t in[32];
         int n = usb_serial_jtag_read_bytes(in, sizeof in, 0);
         for (int i = 0; i < n; i++) console_feed((char)in[i]);
 
+        int64_t t0 = esp_timer_get_time();
         pd_sm_step(&s_sm);
+        uint32_t us = (uint32_t)(esp_timer_get_time() - t0);
+        if (us > poll_max_us) poll_max_us = us;
+        if (us > POLL_SLOW_US) {
+            slow_count++;
+            uint32_t ms = clock_ms();
+            if (!slow_logged || (int32_t)(ms - slow_last_ms) >= POLL_SLOW_GAP_MS) {
+                log_begin(&l, "poll.slow");
+                log_uint(&l, "us", us);
+                log_str(&l, "state", pd_sm_state_name(s_sm.state));
+                log_uint(&l, "n", slow_count);
+                log_end(&l);
+                slow_logged = true;
+                slow_last_ms = ms;
+            }
+        }
 
         uint32_t now = clock_ms();
         if ((int32_t)(now - next_hb) >= 0) {
@@ -113,7 +133,9 @@ void app_main(void)
             if ((int32_t)(now - next_hb) >= 0) next_hb = now + HB_PERIOD_MS; /* don't burst after a stall */
             log_begin(&l, "hb");
             log_str(&l, "build", BUILD_ID);   /* boot line may be lost before capture opens */
-            log_str(&l, "state", pd_sm_state_name(s_sm.state));
+            pd_sm_hb_fields(&s_sm, &l);
+            log_uint(&l, "poll_max_us", poll_max_us);
+            poll_max_us = 0;               /* per heartbeat window */
             log_uint(&l, "i2c_errs", fusb302_err_count());
             if (s_log_drops != reported_drops) {
                 log_uint(&l, "log_drops", s_log_drops);

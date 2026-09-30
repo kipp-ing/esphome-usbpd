@@ -30,9 +30,14 @@ carries `log_drops`. Lines too long for the buffer end in `"trunc":true`.
 | ev | meaning |
 |---|---|
 | `boot` | see above |
-| `hb` | every 1 s: `build`, `state`, `i2c_errs`, (`log_drops` when it changed) |
-| `sm` | every transition `from`,`to`,`on` (internal transitions have from==to) |
-| `sm.init` / `sm.unhandled` / `sm.qfull` / `sm.want` | SM bookkeeping |
+| `hb` | every 1 s: `build`, `state`, `vbus`, `want`, `mv` (contract mV or 0), `poll_max_us` (slowest `pd_sm_step` since the last hb), `i2c_errs`, (`log_drops` when it changed) |
+| `poll.slow` | one `pd_sm_step` took > 2000 us: `us`, `state`, `n` (total count); rate-limited to 1 line/s |
+| `sm` | every real state change `from`,`to`,`on` (SAME rows are not logged) |
+| `sm.init` | `rows` (85), `states` (16), `state` |
+| `sm.unhandled` / `sm.qfull` | no row matched (`state`,`on`) / event queue full (`on`,`drops`) |
+| `vbus` `cc` `cc.retry` `pd.cfg` | Type-C layer, docs/spec.md §7 |
+| `pd.rx` `pd.caps` `pd.caps.bad` `pd.sel` `pd.tx` `pd.txres` `pd.gcrc` `pd.dup` `pd.rxraw` | protocol layer, docs/spec.md §7 (`pd.txres` res=fail may carry `i2c:true` / `coll:true`) |
+| `pd.rej` `pd.sr` `pd.hr` `pd.giveup` `pd.want` `contract` `contract.lost` | policy/SM, docs/spec.md §7 |
 | `i2c.err` | `op`,`reg`,`n`,`rc`,`rc_name`,`errs` |
 | `cmd` / `regs` | console replies |
 
@@ -51,7 +56,11 @@ Numbers accept decimal or `0x` hex. Errors: `{"ev":"cmd","cmd":..,"ok":false,"er
 - `src/log.{c,h}` — JSONL logger, pure C (clock + sink injected)
 - `src/fusb302_regs.h` — datasheet register map + bits (pure defines)
 - `src/fusb302.{c,h}` — I2C HAL @ 400 kHz (SDA 21, SCL 22, addr 0x22), no init policy
-- `src/pd_sm.{c,h}` — table-driven SM, pure C, hardware via `struct pd_port_ops`
-  (states/events are PLACEHOLDERS until docs/spec.md lands)
+- `src/pd_msg.{c,h}` — L2 codec: header, classify, PDO decode, select, RDO, TX burst (pure)
+- `src/pd_drv.{c,h}` — L1 driver poll (§2.1): IRQ/status reads, TX result, VBUS edge, RX FIFO,
+  MessageID/dup filter; posts events into the SM queue
+- `src/pd_sm.{c,h}` — table-driven SM per docs/spec.md §3-5 (16 states, 85 rows), pure C,
+  hardware via `struct pd_port_ops`
 - `src/console.{c,h}`, `src/main.c` — ESP-IDF glue; single task, 1 ms poll loop
-- Host sim: `make -C test/host test` (fake FUSB302 + scenario runner)
+- Host sim: `make -C test/host test` (fake FUSB302 + scenario runner): test_msg = T38 codec vectors,
+  test_sm = T01-T37 + mechanism checks; prints the worst-case I2C load per step
